@@ -3,16 +3,9 @@
  *
  * @param {string} props.label - The label of the input field.
  * @param {string} props.type - The type of the input field.
+ * @param {string[]} props.options - The options of the input field, if its type === "select"
  */
-function Field({
-	label,
-	type,
-	options,
-}: {
-	label: string;
-	type: string;
-	options?: string[];
-}) {
+function Field({ label, type, options, onChange }: InputField) {
 	const id = label.trim().toLowerCase().replace(' ', '-');
 
 	return (
@@ -20,18 +13,17 @@ function Field({
 			<label htmlFor={id}>{label}</label>
 			{type === 'select' ? (
 				<select name={id} aria-labelledby={id} id={id}>
-					{options &&
-						options.map((option) => (
+					{options && options.length > 0
+						? options.map((option) => (
 							<option key={crypto.randomUUID()}>{option}</option>
-						))}
+						))
+						: null}
 				</select>
 			) : (
-				<input id={id} type={type} />
+				<input id={id} type={type} onChange={onChange} />
 			)}
 		</div>
 	);
 }
-
-Field.defaultProps = { options: [''] };
 
 export default Field;
