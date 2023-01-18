@@ -9,13 +9,18 @@ export const employeeSlice = createSlice({
 	name: 'employees',
 	initialState: employees,
 	reducers: {
-		addEmployee: (state: Employee[], action) => {
+		createEmployee: (state: Employee[], action) => {
 			state.push(action.payload);
 			localStorage.setItem('employees', JSON.stringify(state));
+		},
+		clearRecords: (state) => {
+			/* state.pop(); */
+			state.splice(0, state.length);
+			localStorage.removeItem('employees');
 		},
 	},
 });
 
-export const { addEmployee } = employeeSlice.actions;
+export const { createEmployee, clearRecords } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

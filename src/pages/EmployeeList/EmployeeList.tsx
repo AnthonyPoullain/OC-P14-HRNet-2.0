@@ -1,7 +1,8 @@
 import { Grid } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { clearRecords } from '../../features/manageEmployees/employeeSlice';
 
 const COLUMNS = [
 	'First name',
@@ -16,6 +17,8 @@ const COLUMNS = [
 ];
 
 function EmployeeList() {
+	const dispatch = useDispatch();
+
 	const employees: Employee[] = useSelector(
 		(state: RootState) => state.employees
 	);
@@ -50,13 +53,27 @@ function EmployeeList() {
 						'padding-right': '10px',
 						'vertical-align': 'center',
 					},
-					td: {},
+					td: {
+						width: '100px',
+					},
 				}}
 				pagination={{
 					enabled: true,
 					limit: 10,
 				}}
 			/>{' '}
+			<button
+				onClick={() => dispatch(clearRecords())}
+				className="btn"
+				style={{
+					marginBottom: '40px',
+					width: '200px',
+					backgroundColor: 'var(--accent-color)',
+				}}
+				type="button"
+			>
+				Delete all records
+			</button>
 		</div>
 	);
 }
