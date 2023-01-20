@@ -77,6 +77,7 @@ fieldset {
 
 form {
   margin-bottom: 40px;
+  width: 380px;
 }
 
 form input,
@@ -94,7 +95,7 @@ form select {
 
 form input:focus,
 form select:focus {
-  outline: 2px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .btn {
@@ -121,4 +122,19 @@ form select:focus {
 
 .gridjs-th-content {
   margin-top: 3px;
+}
+
+.error-message {
+  display: none;
+  font-size: 12px;
+  color: red;
+  padding-top: 5px;
+}
+
+input:invalid[data-focused='true'] {
+  border: 1px solid red;
+}
+
+input:invalid[data-focused='true'] ~ .error-message {
+  display: block;
 }

@@ -18,8 +18,6 @@ function Nav() {
 				position: 'fixed',
 				zIndex: 1000,
 				width: '100vw',
-				/* background: */
-				/* 	'linear-gradient(90deg, rgba(94,83,171,1) 0%, rgba(139,87,139,1) 100%)', */
 				backgroundColor: '#fff',
 				boxShadow: '-1px -5px 10px 2px var(--grey-400)',
 			}}

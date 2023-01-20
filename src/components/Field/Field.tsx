@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 /**
  * A component that renders a label and an input field.
  *
@@ -8,7 +10,19 @@
  * @param {string} props.id - The id of the input field.
  * @param {function} props.onChange - The onChange handler of the input field.
  */
-function Field({ label, type, options, value, id, onChange }: InputField) {
+function Field({
+	label,
+	type,
+	options,
+	value,
+	id,
+	onChange,
+	errorMessage,
+	required,
+	pattern,
+}: InputField) {
+	const [focused, setFocused] = useState(false);
+
 	return (
 		<div>
 			<label htmlFor={id}>{label}</label>
@@ -19,6 +33,9 @@ function Field({ label, type, options, value, id, onChange }: InputField) {
 					id={id}
 					value={value}
 					onChange={(e) => (onChange ? onChange(e) : null)}
+					required={required}
+					onBlur={() => setFocused(true)}
+					data-focused={focused.toString()}
 				>
 					{options
 						? options.map((option) => (
@@ -29,11 +46,17 @@ function Field({ label, type, options, value, id, onChange }: InputField) {
 			) : (
 				<input
 					id={id}
+					name={id}
 					type={type}
 					onChange={(e) => (onChange ? onChange(e) : null)}
 					value={value}
+					required={required}
+					pattern={pattern}
+					onBlur={() => setFocused(true)}
+					data-focused={focused.toString()}
 				/>
 			)}
+			<span className="error-message">{errorMessage}</span>
 		</div>
 	);
 }

@@ -18,6 +18,9 @@ interface InputField {
 	onChange?: (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => void;
+	errorMessage?: string;
+	required?: boolean;
+	pattern?: string;
 }
 
 interface Employee {

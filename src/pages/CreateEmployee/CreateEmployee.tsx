@@ -25,7 +25,7 @@ function CreateEmployee() {
 		department: DEPARTMENTS[0],
 	};
 
-	const [formData, setFormData] = useState<Employee>(defaultFormData);
+	const [values, setValues] = useState<Employee>(defaultFormData);
 
 	const INPUTS: InputField[][] = [
 		[
@@ -33,21 +33,33 @@ function CreateEmployee() {
 				label: 'First Name',
 				id: 'firstName',
 				type: 'text',
+				errorMessage:
+					'First Name should be at least 3 characters long and contain only letters.',
+				pattern: '^[a-zA-Z -]{3,}$',
+				required: true,
 			},
 			{
 				label: 'Last Name',
 				id: 'lastName',
 				type: 'text',
+				errorMessage:
+					'Last Name should be at least 3 characters long and contain only letters.',
+				pattern: '^[a-zA-Z -]{3,}$',
+				required: true,
 			},
 			{
 				label: 'Date of Birth',
 				id: 'dateOfBirth',
 				type: 'date',
+				errorMessage: 'Please select a date.',
+				required: true,
 			},
 			{
 				label: 'Start Date',
 				id: 'startDate',
 				type: 'date',
+				errorMessage: 'Please select a date.',
+				required: true,
 			},
 		],
 		[
@@ -55,22 +67,32 @@ function CreateEmployee() {
 				label: 'Street',
 				id: 'street',
 				type: 'text',
+				pattern: '^[a-zA-Z0-9 -]{3,}$',
+				errorMessage: 'Invalid street format.',
+				required: true,
 			},
 			{
 				label: 'City',
 				id: 'city',
 				type: 'text',
+				pattern: '^[a-zA-Z -]{3,}$',
+				errorMessage: 'Invalid city format.',
+				required: true,
 			},
 			{
 				label: 'State',
 				id: 'state',
 				type: 'select',
 				options: STATES,
+				required: true,
 			},
 			{
 				label: 'Zip Code',
 				id: 'zipCode',
 				type: 'text',
+				errorMessage: 'Invalid zip code.',
+				pattern: '[0-9]{5}',
+				required: true,
 			},
 		],
 		[
@@ -79,37 +101,37 @@ function CreateEmployee() {
 				id: 'department',
 				type: 'select',
 				options: DEPARTMENTS,
+				required: true,
 			},
 		],
 	];
 
-	function handleChange(
-		inputKey: EmployeeDataField,
+	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) {
-		const updatedValue = { [inputKey]: e.target.value };
-		setFormData((data) => ({ ...data, ...updatedValue }));
-	}
+	) => {
+		const updatedValue = { [e.target.id]: e.target.value };
+		setValues((data) => ({ ...data, ...updatedValue }));
+	};
 
-	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createEmployee(formData));
+		dispatch(createEmployee(values));
 		window.alert('Employee added');
-	}
+	};
 
-	function handleGenerateData() {
+	const handleGenerateData = () => {
 		const mockData = generateRandomEmployee();
 		const inputs = document.querySelectorAll<HTMLInputElement>('input,select');
-		Object.values(formData).forEach((field, i) => {
+		Object.values(values).forEach((field, i) => {
 			inputs[i].value = field;
 		});
-		setFormData({ ...mockData });
+		setValues({ ...mockData });
 		/* dispatch(createEmployee(mockData)); */
-	}
+	};
 
 	useEffect(() => {
-		console.table(formData);
-	}, [formData]);
+		console.table(values);
+	}, [values]);
 
 	return (
 		<div className="container">
@@ -122,9 +144,12 @@ function CreateEmployee() {
 							label={input.label}
 							id={input.id}
 							type={input.type}
-							value={formData[input.id]}
-							onChange={(e) => handleChange(input.id, e)}
+							value={values[input.id]}
+							onChange={handleChange}
 							options={input.options}
+							errorMessage={input.errorMessage}
+							pattern={input.pattern}
+							required={input.required}
 						/>
 					))}
 				</div>
@@ -137,9 +162,12 @@ function CreateEmployee() {
 							label={input.label}
 							id={input.id}
 							type={input.type}
-							value={formData[input.id]}
-							onChange={(e) => handleChange(input.id, e)}
+							value={values[input.id]}
+							onChange={handleChange}
 							options={input.options}
+							errorMessage={input.errorMessage}
+							pattern={input.pattern}
+							required={input.required}
 						/>
 					))}
 				</fieldset>
@@ -151,9 +179,12 @@ function CreateEmployee() {
 							label={input.label}
 							id={input.id}
 							type={input.type}
-							value={formData[input.id]}
-							onChange={(e) => handleChange(input.id, e)}
+							value={values[input.id]}
+							onChange={handleChange}
 							options={input.options}
+							errorMessage={input.errorMessage}
+							pattern={input.pattern}
+							required={input.required}
 						/>
 					))}
 					<button className="btn" type="submit">
