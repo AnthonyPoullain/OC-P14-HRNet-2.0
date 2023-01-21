@@ -9,6 +9,9 @@ import { useState } from 'react';
  * @param {string} props.value - The value of the input field.
  * @param {string} props.id - The id of the input field.
  * @param {function} props.onChange - The onChange handler of the input field.
+ * @param {string} props.errorMessage - The error message of the input field.
+ * @param {boolean} props.required - Whether the input field is required.
+ * @param {string} props.pattern - The pattern of the input field.
  */
 function Field({
 	label,

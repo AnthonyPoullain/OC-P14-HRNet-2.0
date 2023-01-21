@@ -11,16 +11,18 @@ export const employeeSlice = createSlice({
 	reducers: {
 		createEmployee: (state: Employee[], action) => {
 			state.push(action.payload);
-			localStorage.setItem('employees', JSON.stringify(state));
+		},
+		deleteEmployeeByIndex: (state, action) => {
+			state.splice(action.payload, 1);
 		},
 		clearRecords: (state) => {
 			/* state.pop(); */
 			state.splice(0, state.length);
-			localStorage.removeItem('employees');
 		},
 	},
 });
 
-export const { createEmployee, clearRecords } = employeeSlice.actions;
+export const { createEmployee, deleteEmployeeByIndex, clearRecords } =
+	employeeSlice.actions;
 
 export default employeeSlice.reducer;

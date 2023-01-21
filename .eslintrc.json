@@ -25,6 +25,7 @@
 	],
 	"rules": {
 		"react/react-in-jsx-scope": "off",
+		"jsx-a11y/no-autofocus": "off",
 		"jsx-a11y/label-has-associated-control": [
 			2,
 			{

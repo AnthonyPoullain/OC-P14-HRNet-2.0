@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createEmployee } from '../../features/manageEmployees/employeeSlice';
+import { createEmployee } from '../../store/employeeSlice';
 import { getDepartments, getStates } from './createEmployeeData';
 import generateRandomEmployee from '../../mockData/generateRandomEmployee';
 import Field from '../../components/Field/Field';
+import Modal from '../../components/Modal/Modal';
 
 const TEST_MODE = true;
 
 function CreateEmployee() {
 	const dispatch = useDispatch();
+	const [displayDialog, setDisplayDialog] = useState(false);
 
 	const STATES = getStates();
 	const DEPARTMENTS = getDepartments();
 
-	const defaultFormData = {
+	const defaultValues = {
 		firstName: '',
 		lastName: '',
 		dateOfBirth: '',
@@ -25,7 +27,7 @@ function CreateEmployee() {
 		department: DEPARTMENTS[0],
 	};
 
-	const [values, setValues] = useState<Employee>(defaultFormData);
+	const [values, setValues] = useState<Employee>(defaultValues);
 
 	const INPUTS: InputField[][] = [
 		[
@@ -116,7 +118,8 @@ function CreateEmployee() {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		dispatch(createEmployee(values));
-		window.alert('Employee added');
+		setValues(defaultValues);
+		setDisplayDialog(true);
 	};
 
 	const handleGenerateData = () => {
@@ -126,7 +129,6 @@ function CreateEmployee() {
 			inputs[i].value = field;
 		});
 		setValues({ ...mockData });
-		/* dispatch(createEmployee(mockData)); */
 	};
 
 	useEffect(() => {
@@ -201,6 +203,14 @@ function CreateEmployee() {
 					) : null}
 				</div>
 			</form>
+			{displayDialog ? (
+				<Modal
+					title="Confirmation"
+					message="User created successfully!"
+					buttonText="Close"
+					onClick={() => setDisplayDialog((display) => !display)}
+				/>
+			) : null}
 		</div>
 	);
 }
