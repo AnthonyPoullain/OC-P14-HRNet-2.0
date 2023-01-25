@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 /**
  * A component that renders a label and an input field.
@@ -20,12 +20,9 @@ function Field({
 	value,
 	id,
 	onChange,
+	onBlur,
 	errorMessage,
-	required,
-	pattern,
 }: InputField) {
-	const [focused, setFocused] = useState(false);
-
 	return (
 		<div>
 			<label htmlFor={id}>{label}</label>
@@ -35,10 +32,8 @@ function Field({
 					aria-labelledby={id}
 					id={id}
 					value={value}
-					onChange={(e) => (onChange ? onChange(e) : null)}
-					required={required}
-					onBlur={() => setFocused(true)}
-					data-focused={focused.toString()}
+					onChange={onChange}
+					onBlur={onBlur}
 				>
 					{options
 						? options.map((option) => (
@@ -51,12 +46,9 @@ function Field({
 					id={id}
 					name={id}
 					type={type}
-					onChange={(e) => (onChange ? onChange(e) : null)}
+					onChange={onChange}
+					onBlur={onBlur}
 					value={value}
-					required={required}
-					pattern={pattern}
-					onBlur={() => setFocused(true)}
-					data-focused={focused.toString()}
 				/>
 			)}
 			<span className="error-message">{errorMessage}</span>
@@ -64,4 +56,4 @@ function Field({
 	);
 }
 
-export default Field;
+export default React.memo(Field);

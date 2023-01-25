@@ -16,7 +16,6 @@ export const employeeSlice = createSlice({
 			state.splice(action.payload, 1);
 		},
 		clearRecords: (state) => {
-			/* state.pop(); */
 			state.splice(0, state.length);
 		},
 	},

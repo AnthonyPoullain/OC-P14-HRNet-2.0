@@ -33,8 +33,6 @@ function Nav() {
 					<span
 						style={{
 							color: 'var(--primary-color)',
-							fontWeight: '500',
-							fontSize: '14px',
 						}}
 					>
 						2.0

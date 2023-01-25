@@ -43,12 +43,7 @@ function Modal({
 			<div style={MODAL}>
 				<h2>{title}</h2>
 				<p>{message}</p>
-				<button
-					autoFocus
-					type="button"
-					className="btn"
-					onClick={() => onClick()}
-				>
+				<button autoFocus type="button" className="btn" onClick={onClick}>
 					{buttonText}
 				</button>
 			</div>

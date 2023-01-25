@@ -6,7 +6,7 @@ import Nav from './Nav/Nav';
  */
 function Layout() {
 	return (
-		<div>
+		<div id="app">
 			<Nav />
 			<main>
 				<Outlet />
