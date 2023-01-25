@@ -19,6 +19,7 @@ interface InputField {
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => void;
 	onBlur?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+	error?: boolean;
 	errorMessage?: string;
 }
 

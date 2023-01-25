@@ -8,7 +8,7 @@ import Field from '../../components/Field/Field';
 import Modal from '../../components/Modal/Modal';
 import validationSchema from './validationSchema';
 
-const TEST_MODE = false;
+const TEST_MODE = true;
 
 function CreateEmployee() {
 	const dispatch = useDispatch();
@@ -72,29 +72,31 @@ function CreateEmployee() {
 		],
 	];
 
+	const initialValues = {
+		firstName: '',
+		lastName: '',
+		dateOfBirth: '',
+		startDate: '',
+		street: '',
+		city: '',
+		state: STATES[0],
+		zipCode: '',
+		department: DEPARTMENTS[0],
+	};
+
 	const formik = useFormik({
-		initialValues: {
-			firstName: '',
-			lastName: '',
-			dateOfBirth: '',
-			startDate: '',
-			street: '',
-			city: '',
-			state: STATES[0],
-			zipCode: '',
-			department: DEPARTMENTS[0],
-		},
-		onSubmit: (values) => {
+		initialValues,
+		onSubmit: (values, { resetForm }) => {
 			dispatch(createEmployee(values));
 			setDisplayDialog(true);
+			resetForm();
 		},
 		validationSchema,
 	});
 
 	const handleGenerateData = () => {
 		const mockData = generateRandomEmployee();
-		dispatch(createEmployee(mockData));
-		console.log('Employee created');
+		formik.setValues(mockData);
 	};
 
 	return (
@@ -106,14 +108,13 @@ function CreateEmployee() {
 						<Field
 							key={input.id}
 							label={input.label}
+							value={formik.values[input.id]}
 							id={input.id}
 							type={input.type}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
 							options={input.options}
-							errorMessage={
-								formik.touched[input.id] ? formik.errors[input.id] : ''
-							}
+							error={!!formik.touched[input.id] && !!formik.errors[input.id]}
+							errorMessage={formik.errors[input.id]}
 						/>
 					))}
 				</div>
@@ -123,11 +124,12 @@ function CreateEmployee() {
 						<Field
 							key={input.id}
 							label={input.label}
+							value={formik.values[input.id]}
 							id={input.id}
 							type={input.type}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
 							options={input.options}
+							error={!!formik.touched[input.id] && !!formik.errors[input.id]}
 							errorMessage={
 								formik.touched[input.id] ? formik.errors[input.id] : ''
 							}
@@ -140,11 +142,12 @@ function CreateEmployee() {
 						<Field
 							key={input.id}
 							label={input.label}
+							value={formik.values[input.id]}
 							id={input.id}
 							type={input.type}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
 							options={input.options}
+							error={!!formik.touched[input.id] && !!formik.errors[input.id]}
 							errorMessage={
 								formik.touched[input.id] ? formik.errors[input.id] : ''
 							}

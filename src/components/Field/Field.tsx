@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 /**
  * A component that renders a label and an input field.
@@ -9,9 +9,9 @@ import React, { useState } from 'react';
  * @param {string} props.value - The value of the input field.
  * @param {string} props.id - The id of the input field.
  * @param {function} props.onChange - The onChange handler of the input field.
- * @param {string} props.errorMessage - The error message of the input field.
- * @param {boolean} props.required - Whether the input field is required.
- * @param {string} props.pattern - The pattern of the input field.
+ * @param {function} props.onBlur - The onBlur handler of the input field.
+ * @param {boolean} props.error - Whether the input field has an error.
+ * @param {string} props.errorMessage - The error message of the input field, if it has an error.
  */
 function Field({
 	label,
@@ -20,7 +20,7 @@ function Field({
 	value,
 	id,
 	onChange,
-	onBlur,
+	error,
 	errorMessage,
 }: InputField) {
 	return (
@@ -28,12 +28,12 @@ function Field({
 			<label htmlFor={id}>{label}</label>
 			{type === 'select' ? (
 				<select
+					className={error ? 'error' : ''}
 					name={id}
 					aria-labelledby={id}
 					id={id}
 					value={value}
 					onChange={onChange}
-					onBlur={onBlur}
 				>
 					{options
 						? options.map((option) => (
@@ -43,15 +43,15 @@ function Field({
 				</select>
 			) : (
 				<input
+					className={error ? 'error' : ''}
 					id={id}
 					name={id}
 					type={type}
 					onChange={onChange}
-					onBlur={onBlur}
 					value={value}
 				/>
 			)}
-			<span className="error-message">{errorMessage}</span>
+			<span className="error-message">{error ? errorMessage : ''}</span>
 		</div>
 	);
 }

@@ -130,21 +130,17 @@ form select:focus {
 }
 
 .error-message {
-  font-size: 12px;
-  color: salmon;
-  padding-top: 5px;
-}
-
-input:invalid[data-focused='true'] {
-  border: 1px solid salmon;
-}
-
-input:invalid[data-focused='true'] ~ .error-message {
-  display: block;
+  font-size: 11px;
+  color: var(--accent-color);
 }
 
 button:disabled,
 button[disabled] {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.error,
+.error:focus {
+  border: 1px solid var(--accent-color) !important;
 }
