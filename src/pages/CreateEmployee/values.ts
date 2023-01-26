@@ -1,4 +1,4 @@
-const DEPARTMENTS = [
+export const DEPARTMENTS = [
 	'Sales',
 	'Marketing',
 	'Engineering',
@@ -6,7 +6,7 @@ const DEPARTMENTS = [
 	'Legal',
 ];
 
-const STATES = [
+export const STATES = [
 	'Alabama',
 	'Alaska',
 	'American Samoa',
@@ -68,10 +68,64 @@ const STATES = [
 	'Wyoming',
 ];
 
-export function getDepartments() {
-	return DEPARTMENTS;
-}
+export const INPUTS: InputField[] = [
+	{
+		label: 'First Name',
+		id: 'firstName',
+		type: 'text',
+	},
+	{
+		label: 'Last Name',
+		id: 'lastName',
+		type: 'text',
+	},
+	{
+		label: 'Date of Birth',
+		id: 'dateOfBirth',
+		type: 'date',
+	},
+	{
+		label: 'Start Date',
+		id: 'startDate',
+		type: 'date',
+	},
+	{
+		label: 'Street',
+		id: 'street',
+		type: 'text',
+	},
+	{
+		label: 'City',
+		id: 'city',
+		type: 'text',
+	},
+	{
+		label: 'State',
+		id: 'state',
+		type: 'select',
+		options: STATES,
+	},
+	{
+		label: 'Zip Code',
+		id: 'zipCode',
+		type: 'text',
+	},
+	{
+		label: 'Department',
+		id: 'department',
+		type: 'select',
+		options: DEPARTMENTS,
+	},
+];
 
-export function getStates() {
-	return STATES;
-}
+export const INITIAL_VALUES: Employee = {
+	firstName: '',
+	lastName: '',
+	dateOfBirth: '',
+	startDate: '',
+	street: '',
+	city: '',
+	state: STATES[0],
+	zipCode: '',
+	department: DEPARTMENTS[0],
+};

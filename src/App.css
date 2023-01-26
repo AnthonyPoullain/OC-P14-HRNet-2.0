@@ -8,6 +8,19 @@
   --grey-600: #373737;
 }
 
+#app,
+#portal {
+  position: relative;
+}
+
+#app {
+  z-index: 1;
+}
+
+#portal {
+  z-index: 2;
+}
+
 * {
   box-sizing: border-box;
 }

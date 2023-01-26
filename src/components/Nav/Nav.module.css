@@ -1,0 +1,25 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(10px, 5vw, 60px) 0 clamp(10px, 5vw, 60px);
+  position: fixed;
+  width: 100vw;
+  background-color: #fff;
+  box-shadow: -1px -5px 10px 2px var(--grey-400);
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 24;
+}
+
+.logo span {
+  color: var(--primary-color);
+}
+
+.links {
+  font-weight: bold;
+  color: var(--grey-400);
+}

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import styles from './Nav.module.css';
 
 /**
  * Nav component
@@ -9,42 +10,14 @@ function Nav() {
 	const onEmployeeList = pathname === '/employee-list';
 
 	return (
-		<nav
-			style={{
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-between',
-				padding: '0 clamp(10px,5vw,60px) 0 clamp(10px,5vw,60px)',
-				position: 'fixed',
-				zIndex: 1000,
-				width: '100vw',
-				backgroundColor: '#fff',
-				boxShadow: '-1px -5px 10px 2px var(--grey-400)',
-			}}
-		>
+		<nav className={styles.nav}>
 			<Link to="/">
-				<h1
-					style={{
-						fontWeight: '700',
-						fontSize: '24',
-					}}
-				>
+				<h1 className={styles.logo}>
 					HRnet
-					<span
-						style={{
-							color: 'var(--primary-color)',
-						}}
-					>
-						2.0
-					</span>
+					<span>2.0</span>
 				</h1>
 			</Link>
-			<div
-				style={{
-					fontWeight: 'bold',
-					color: 'var(--grey-400)',
-				}}
-			>
+			<div className={styles.links}>
 				<Link
 					style={{ opacity: onHomePage ? '100%' : '66%' }}
 					className={onHomePage ? 'btn' : ''}

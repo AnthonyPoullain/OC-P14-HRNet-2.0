@@ -1,9 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { getDepartments } from '../pages/CreateEmployee/createEmployeeData';
 
 export default function generateRandomEmployee() {
 	const MyDate = new Date();
-	const DEPARTMENTS = getDepartments();
 
 	return {
 		firstName: faker.name.firstName(),
@@ -19,6 +17,6 @@ export default function generateRandomEmployee() {
 		city: faker.address.cityName(),
 		state: faker.address.state(),
 		zipCode: faker.address.zipCode('#####'),
-		department: DEPARTMENTS[0],
+		department: faker.name.jobTitle(),
 	};
 }
