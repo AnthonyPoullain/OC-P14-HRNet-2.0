@@ -1,0 +1,17 @@
+.btn {
+  background-color: var(--primary-color);
+  border: none;
+  color: #fff;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px 13px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.btnSecondary {
+  background-color: var(--accent-color);
+}

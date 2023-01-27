@@ -23,3 +23,16 @@
   font-weight: bold;
   color: var(--grey-400);
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  padding: 10px;
+  margin-left: 20px;
+  white-space: nowrap;
+}
+
+a:hover {
+  opacity: 100% !important;
+  transition: opacity 0.25s ease-in-out;
+}

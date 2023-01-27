@@ -7,17 +7,26 @@ import Field from '../../components/Field/Field';
 import Modal from '../../components/Modal/Modal';
 import { INITIAL_VALUES, INPUTS } from './values';
 import validationSchema from './validationSchema';
+import Button from '../../components/Button/Button';
+import getStateAbbreviation from './helpers';
 
+/* If true, displays a 'Generate random data' button at the bototm of the page to quickly 
+fill in the input fields with formatted data for debugging purposes. */
 const TEST_MODE = true;
 
 function CreateEmployee() {
 	const dispatch = useDispatch();
 	const [displayDialog, setDisplayDialog] = useState(false);
 
+	// Setup form
 	const formik = useFormik({
 		initialValues: INITIAL_VALUES,
 		onSubmit: (values, { resetForm }) => {
-			dispatch(createEmployee(values));
+			const updatedValues = {
+				...values,
+				state: getStateAbbreviation(values.state),
+			};
+			dispatch(createEmployee(updatedValues));
 			setDisplayDialog(true);
 			resetForm();
 		},
@@ -26,7 +35,9 @@ function CreateEmployee() {
 
 	const handleGenerateData = () => {
 		const mockData = generateRandomEmployee();
+		mockData.state = getStateAbbreviation(mockData.state);
 		formik.setValues(mockData);
+		dispatch(createEmployee(mockData));
 	};
 
 	return (
@@ -43,25 +54,21 @@ function CreateEmployee() {
 						onChange={formik.handleChange}
 						options={input.options}
 						error={!!formik.touched[input.id] && !!formik.errors[input.id]}
-						errorMessage={formik.errors[input.id] as string}
+						errorMessage={formik.errors[input.id]}
 					/>
 				))}
-				<button
+				<Button
 					/* disabled={!formik.isValid} */
-					onClick={() => window.scrollTo(0, 0)}
-					className="btn"
 					type="submit"
+					fullWidth
+					onClick={() => window.scrollTo(0, 0)}
 				>
 					Save
-				</button>
+				</Button>
 				{TEST_MODE ? (
-					<button
-						onClick={handleGenerateData}
-						className="btn btn-secondary"
-						type="button"
-					>
+					<Button fullWidth onClick={handleGenerateData} variant="secondary">
 						Generate random data
-					</button>
+					</Button>
 				) : null}
 			</form>
 			{displayDialog ? (

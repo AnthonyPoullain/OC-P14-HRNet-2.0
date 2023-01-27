@@ -17,6 +17,6 @@ export default function generateRandomEmployee() {
 		city: faker.address.cityName(),
 		state: faker.address.state(),
 		zipCode: faker.address.zipCode('#####'),
-		department: faker.name.jobTitle(),
+		department: faker.name.jobArea(),
 	};
 }
