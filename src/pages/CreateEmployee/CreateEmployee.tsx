@@ -35,9 +35,8 @@ function CreateEmployee() {
 
 	const handleGenerateData = () => {
 		const mockData = generateRandomEmployee();
-		mockData.state = getStateAbbreviation(mockData.state);
 		formik.setValues(mockData);
-		dispatch(createEmployee(mockData));
+		/* dispatch(createEmployee(mockData)); */
 	};
 
 	return (
