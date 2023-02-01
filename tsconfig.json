@@ -28,7 +28,8 @@
 	"include": [
 		"src",
 		"setupTests.ts",
-		"vite.config.ts"
+		"vite.config.ts",
+		".eslintrc.cjs"
 	],
 	"references": [
 		{
