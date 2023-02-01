@@ -1,3 +1,7 @@
+:root {
+  --animation-duration: 200ms;
+}
+
 .modal {
   min-width: 400px;
   min-height: 150px;
@@ -10,7 +14,7 @@
   padding: 20px 40px;
   width: fit-content;
   box-shadow: 0px 0px 20px -10px var(--primary-color);
-  animation: popup 400ms ease-out forwards;
+  animation: popup var(--animation-duration) ease-out forwards;
 }
 
 .modal-bg {
@@ -20,7 +24,7 @@
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.2);
-  animation: fade 400ms ease-out forwards;
+  animation: fade var(--animation-duration) ease-out forwards;
 }
 
 @keyframes popup {
@@ -41,4 +45,20 @@
   100% {
     opacity: 1;
   }
+}
+
+.title {
+  font-size: 18px;
+}
+
+.message {
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+.buttons button {
+  font-size: 12px;
 }

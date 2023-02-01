@@ -29,29 +29,40 @@ function Modal({
 		variant: 'primary',
 	};
 
+	const onClickWrapper = (button: ButtonProperties) => {
+		if (button.onClick) button.onClick();
+		if (onClose) onClose();
+	};
+
 	return open ? (
 		<>
 			<div className={styles['modal-bg']} />
-			<div className={styles['close-btn']}>X</div>
+			{/* <div className={styles['close-btn']}>X</div> */}
 			<div className={styles.modal}>
-				<h2>{title}</h2>
-				<p>{message}</p>
-				{buttons ? (
-					buttons.map((button) => (
-						<button
-							key={crypto.randomUUID()}
-							type="button"
-							className="btn"
-							onClick={button.onClick || onClose}
-						>
-							{button.label}
+				<h2 className={styles.title}>{title}</h2>
+				<p className={styles.message}>{message}</p>
+				<div className={styles.buttons}>
+					{buttons ? (
+						buttons.map((button) => (
+							<button
+								key={crypto.randomUUID()}
+								type="button"
+								className={
+									button.variant === 'secondary' ? 'btn btn-secondary' : 'btn'
+								}
+								onClick={
+									button.onClick ? () => onClickWrapper(button) : onClose
+								}
+							>
+								{button.label}
+							</button>
+						))
+					) : (
+						<button autoFocus type="button" className="btn" onClick={onClose}>
+							{defaultBtn.label}
 						</button>
-					))
-				) : (
-					<button autoFocus type="button" className="btn" onClick={onClose}>
-						{defaultBtn.label}
-					</button>
-				)}
+					)}
+				</div>
 			</div>
 		</>
 	) : null;

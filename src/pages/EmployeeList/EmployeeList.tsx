@@ -2,15 +2,24 @@ import { h } from 'gridjs';
 import { Grid } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button/Button';
 import Field from '../../components/Field/Field';
+import Modal from '../../components/Modal/Modal';
 import { RootState } from '../../store';
 import { clearRecords, deleteEmployeeByIndex } from '../../store/employeeSlice';
 import styles from './EmployeeList.module.css';
+import { getEmployeeIndex, getRowValues } from './helpers';
 
 function EmployeeList() {
 	const dispatch = useDispatch();
+	const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+	const [displayDeleteAllModal, setDisplayDeleteAllModal] = useState(false);
+	const [currentRow, setCurrentRow] = useState(['']);
+	const [currentIndex, setCurrentIndex] = useState(0);
+
+	console.log('render');
 
 	/* Get employee list from global state */
 	const employees: Employee[] = useSelector(
@@ -18,12 +27,12 @@ function EmployeeList() {
 	);
 
 	const handleDeleteEmployee = (row: Row) => {
-		const rowValues = row.cells.map((cell: Cell) => cell.data);
-		rowValues.pop();
-		const employeeIndex = employees.findIndex((employee: Employee) =>
-			Object.values(employee).every((value) => rowValues.includes(value))
-		);
-		dispatch(deleteEmployeeByIndex(employeeIndex));
+		const rowValues = getRowValues(row);
+		rowValues.pop(); // Remove last row of table as it contains the 'Delete' button and no data
+		setCurrentRow(rowValues);
+		const employeeIndex = getEmployeeIndex(employees, rowValues);
+		setCurrentIndex(employeeIndex);
+		setDisplayDeleteModal(!displayDeleteModal);
 	};
 
 	// Number of entries to display in the table
@@ -47,7 +56,7 @@ function EmployeeList() {
 				h(
 					'button',
 					{
-						className: 'btn btn-secondary',
+						className: 'btn',
 						onClick: () => handleDeleteEmployee(row),
 					},
 					'Delete'
@@ -95,10 +104,53 @@ function EmployeeList() {
 					limit: nbOfEntries,
 				}}
 			/>
-			<Button variant="secondary" onClick={() => dispatch(clearRecords())}>
-				<i className="fa-solid fa-trash-can" style={{ marginRight: '10px' }} />{' '}
+			<Button
+				variant="secondary"
+				onClick={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
+			>
+				<i className="fa-solid fa-trash-can" style={{ marginRight: '5px' }} />{' '}
 				Delete all records
 			</Button>
+
+			{createPortal(
+				<Modal
+					title="Delete all employees?"
+					message="This action cannot be undone."
+					open={displayDeleteAllModal}
+					onClose={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
+					buttons={[
+						{
+							label: 'Delete',
+							variant: 'secondary',
+							onClick: () => dispatch(clearRecords()),
+						},
+						{
+							label: 'Cancel',
+						},
+					]}
+				/>,
+				document.getElementById('portal') as HTMLElement
+			)}
+
+			{createPortal(
+				<Modal
+					title="Delete employee?"
+					message={`${currentRow[0]} ${currentRow[1]}`}
+					open={displayDeleteModal}
+					onClose={() => setDisplayDeleteModal(!displayDeleteModal)}
+					buttons={[
+						{
+							label: 'Delete',
+							variant: 'secondary',
+							onClick: () => dispatch(deleteEmployeeByIndex(currentIndex)),
+						},
+						{
+							label: 'Cancel',
+						},
+					]}
+				/>,
+				document.getElementById('portal') as HTMLElement
+			)}
 		</div>
 	);
 }

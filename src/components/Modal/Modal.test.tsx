@@ -78,19 +78,42 @@ describe('Modal component', () => {
 		});
 
 		it('should execute callback on button click', async () => {
-			const mockCallback = vi.fn();
+			const mockHandleClick = vi.fn();
 			const { getByRole } = render(
 				// @ts-ignore
 				<Modal
 					title=""
 					message=""
-					buttons={[{ label: 'Execute mock callback', onClick: mockCallback }]}
+					buttons={[
+						{ label: 'Execute mock callback', onClick: mockHandleClick },
+					]}
 				/>
 			);
 			const button = getByRole('button');
 			expect(button).toBeInTheDocument();
 			await userEvent.click(button);
-			expect(mockCallback).toHaveBeenCalled();
+			expect(mockHandleClick).toHaveBeenCalled();
+		});
+
+		it('should still close modal after executing custom button onClick callback', async () => {
+			const mockHandleClick = vi.fn();
+			const mockHandleClose = vi.fn();
+			const { getByRole } = render(
+				// @ts-ignore
+				<Modal
+					title=""
+					message=""
+					onClose={mockHandleClose}
+					buttons={[
+						{ label: 'Execute mock callback', onClick: mockHandleClick },
+					]}
+				/>
+			);
+			const button = getByRole('button');
+			expect(button).toBeInTheDocument();
+			await userEvent.click(button);
+			expect(mockHandleClick).toHaveBeenCalled();
+			expect(mockHandleClose).toHaveBeenCalled();
 		});
 	});
 });
