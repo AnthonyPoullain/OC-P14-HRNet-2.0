@@ -6,19 +6,16 @@ import EmployeeList from './pages/EmployeeList/EmployeeList';
 
 function App() {
 	return (
-		<>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Layout />}>
-						<Route index element={<CreateEmployee />} />
-					</Route>
-					<Route path="/employee-list" element={<Layout />}>
-						<Route index element={<EmployeeList />} />
-					</Route>
-				</Routes>
-			</BrowserRouter>
-			<div id="portal" />
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route index element={<CreateEmployee />} />
+				</Route>
+				<Route path="/employee-list" element={<Layout />}>
+					<Route index element={<EmployeeList />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 

@@ -39,7 +39,7 @@ interface InputField {
 interface Btn {
 	variant?: 'primary' | 'secondary';
 	type?: 'submit' | 'button';
-	onClick: () => void;
+	onClick?: () => void;
 	children?: React.ReactNode;
 	disabled?: boolean;
 	fullWidth?: boolean;

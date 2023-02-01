@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
 :root {
-  --primary-color: darkturquoise;
+  --primary-color: dodgerblue;
   --accent-color: salmon;
   --grey-200: #d2d6dc;
   --grey-400: #6b7280;
@@ -112,6 +110,8 @@ form select:focus {
   margin-top: 10px;
   cursor: pointer;
   width: 100%;
+  min-width: 100px;
+  font-weight: bold;
   outline: none;
   border-radius: 5px;
   padding: 10px 13px;

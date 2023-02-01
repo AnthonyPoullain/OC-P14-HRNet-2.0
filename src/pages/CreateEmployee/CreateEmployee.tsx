@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { createPortal } from 'react-dom';
 import { createEmployee } from '../../store/employeeSlice';
 import generateRandomEmployee from '../../mockData/generateRandomEmployee';
 import Field from '../../components/Field/Field';
 import Modal from '../../components/Modal/Modal';
+import Button from '../../components/Button/Button';
 import { INITIAL_VALUES, INPUTS } from './values';
 import validationSchema from './validationSchema';
-import Button from '../../components/Button/Button';
 import getStateAbbreviation from './helpers';
 
 /* If true, displays a 'Generate random data' button at the bototm of the page to quickly 
-fill in the input fields with formatted data for debugging purposes. */
+fill in the input fields with formatted data. */
 const TEST_MODE = true;
 
 function CreateEmployee() {
@@ -36,7 +37,6 @@ function CreateEmployee() {
 	const handleGenerateData = () => {
 		const mockData = generateRandomEmployee();
 		formik.setValues(mockData);
-		/* dispatch(createEmployee(mockData)); */
 	};
 
 	return (
@@ -70,14 +70,15 @@ function CreateEmployee() {
 					</Button>
 				) : null}
 			</form>
-			{displayDialog ? (
+			{createPortal(
 				<Modal
 					title="Confirmation"
 					message="User created successfully!"
-					buttonText="Close"
-					onClick={() => setDisplayDialog((display) => !display)}
-				/>
-			) : null}
+					open={displayDialog}
+					onClose={() => setDisplayDialog(!displayDialog)}
+				/>,
+				document.getElementById('portal') as HTMLElement
+			)}
 		</div>
 	);
 }
