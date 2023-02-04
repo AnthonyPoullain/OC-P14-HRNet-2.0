@@ -1,109 +1,72 @@
 import { h } from 'gridjs';
-import { Grid } from 'gridjs-react';
-import 'gridjs/dist/theme/mermaid.css';
-import { useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button/Button';
-import Field from '../../components/Field/Field';
 import Modal from '../../components/Modal/Modal';
+import Table from '../../components/Table/Table';
 import { RootState } from '../../store';
 import { clearRecords, deleteEmployeeByIndex } from '../../store/employeeSlice';
-import styles from './EmployeeList.module.css';
-import { getEmployeeIndex, getRowValues } from './helpers';
+import { getEmployeeIndex } from './helpers';
 
 function EmployeeList() {
 	const dispatch = useDispatch();
 	const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
 	const [displayDeleteAllModal, setDisplayDeleteAllModal] = useState(false);
-	const [currentRow, setCurrentRow] = useState(['']);
-	const [currentIndex, setCurrentIndex] = useState(0);
-
-	console.log('render');
+	const currentRow = useRef(['']);
+	const employeeIndex = useRef(0);
 
 	/* Get employee list from global state */
 	const employees: Employee[] = useSelector(
 		(state: RootState) => state.employees
 	);
 
-	const handleDeleteEmployee = (row: Row) => {
-		const rowValues = getRowValues(row);
-		rowValues.pop(); // Remove last row of table as it contains the 'Delete' button and no data
-		setCurrentRow(rowValues);
-		const employeeIndex = getEmployeeIndex(employees, rowValues);
-		setCurrentIndex(employeeIndex);
+	const handleDeleteEmployee = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const rowValues = [
+			...(e.currentTarget.closest('tr') as HTMLTableRowElement).children,
+		].map((item) => (item as HTMLElement).innerText);
+		rowValues.pop();
+		currentRow.current = rowValues;
+		employeeIndex.current = getEmployeeIndex(employees, rowValues);
 		setDisplayDeleteModal(!displayDeleteModal);
 	};
 
-	// Number of entries to display in the table
-	const amountsOfEntries = [10, 25, 50, 100];
-	const [nbOfEntries, setNbOfEntries] = useState(amountsOfEntries[0]);
-
 	// Table Grid setup
-	const COLUMNS = [
-		'First name',
-		'Last name',
-		'Start date',
-		'Department',
-		'Date of birth',
-		'Street',
-		'City',
-		'State',
-		'Zip code',
-		{
-			name: 'Delete',
-			formatter: (_: unknown, row: Row) =>
-				h(
-					'button',
-					{
-						className: 'btn',
-						onClick: () => handleDeleteEmployee(row),
-					},
-					'Delete'
-				),
-		},
-	];
+	const columns = useMemo(
+		() => [
+			'First name',
+			'Last name',
+			'Start date',
+			'Department',
+			'Date of birth',
+			'Street',
+			'City',
+			'State',
+			'Zip code',
+			{
+				name: 'Delete',
+				formatter: () =>
+					h(
+						// @ts-ignore
+						'button',
+						{
+							className: 'btn',
+							onClick: handleDeleteEmployee,
+							style: { margin: '0', minWidth: '0' },
+						},
+						''
+					),
+			},
+		],
+		[]
+	);
 
 	return (
 		<div className="container">
 			<h1>Current Employees</h1>
 
-			<div className={styles.pagination_input}>
-				<span>Show</span>
-				<Field
-					value={nbOfEntries.toString()}
-					type="select"
-					id="entries"
-					options={amountsOfEntries}
-					onChange={(e) => setNbOfEntries(Number(e.target.value))}
-				/>
-				<span>entries</span>
-			</div>
+			<Table data={employees} columns={columns} />
 
-			<Grid
-				data={employees}
-				columns={COLUMNS}
-				search
-				sort
-				style={{
-					table: {
-						'font-size': '14px',
-					},
-					th: {
-						'text-align': 'left',
-						'padding-left': '20px',
-						'padding-right': '10px',
-						'vertical-align': 'center',
-					},
-					td: {
-						width: '100px',
-					},
-				}}
-				pagination={{
-					enabled: true,
-					limit: nbOfEntries,
-				}}
-			/>
 			<Button
 				variant="secondary"
 				onClick={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
@@ -117,7 +80,7 @@ function EmployeeList() {
 					title="Delete all employees?"
 					message="This action cannot be undone."
 					open={displayDeleteAllModal}
-					onClose={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
+					onClose={() => setDisplayDeleteAllModal(false)}
 					buttons={[
 						{
 							label: 'Delete',
@@ -135,14 +98,14 @@ function EmployeeList() {
 			{createPortal(
 				<Modal
 					title="Delete employee?"
-					message={`${currentRow[0]} ${currentRow[1]}`}
+					message={`${currentRow.current[0]} ${currentRow.current[1]}`}
 					open={displayDeleteModal}
-					onClose={() => setDisplayDeleteModal(!displayDeleteModal)}
+					onClose={() => setDisplayDeleteModal(false)}
 					buttons={[
 						{
 							label: 'Delete',
 							variant: 'secondary',
-							onClick: () => dispatch(deleteEmployeeByIndex(currentIndex)),
+							onClick: () => dispatch(deleteEmployeeByIndex(employeeIndex)),
 						},
 						{
 							label: 'Cancel',

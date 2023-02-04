@@ -3,6 +3,7 @@
  * @param {Row} row
  */
 export function getRowValues(row: Row) {
+	console.log(row);
 	return row.cells.map((cell: Cell) => cell.data);
 }
 

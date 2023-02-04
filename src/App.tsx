@@ -10,9 +10,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<CreateEmployee />} />
-				</Route>
-				<Route path="/employee-list" element={<Layout />}>
-					<Route index element={<EmployeeList />} />
+					<Route path="employee-list" element={<EmployeeList />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@faker-js/faker": "^7.6.0",
 		"@reduxjs/toolkit": "^1.9.1",
+		"focus-trap-react": "^10.0.2",
 		"formik": "^2.2.9",
 		"gridjs": "^5.1.0",
 		"gridjs-react": "^5.1.0",

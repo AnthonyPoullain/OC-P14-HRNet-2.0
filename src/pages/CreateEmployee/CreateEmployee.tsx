@@ -56,12 +56,7 @@ function CreateEmployee() {
 						errorMessage={formik.errors[input.id]}
 					/>
 				))}
-				<Button
-					/* disabled={!formik.isValid} */
-					type="submit"
-					fullWidth
-					onClick={() => window.scrollTo(0, 0)}
-				>
+				<Button type="submit" fullWidth onClick={() => window.scrollTo(0, 0)}>
 					Save
 				</Button>
 				{TEST_MODE ? (

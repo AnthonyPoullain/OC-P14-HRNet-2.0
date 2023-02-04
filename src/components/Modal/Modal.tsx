@@ -34,6 +34,12 @@ function Modal({
 		if (onClose) onClose();
 	};
 
+	document.addEventListener('keydown', (event) => {
+		if (event.code === 'Escape') {
+			onClose();
+		}
+	});
+
 	return open ? (
 		<>
 			<div className={styles['modal-bg']} />

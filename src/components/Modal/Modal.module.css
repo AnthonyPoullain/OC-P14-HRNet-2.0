@@ -48,17 +48,24 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .message {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .buttons {
   display: flex;
   gap: 10px;
 }
+
 .buttons button {
-  font-size: 12px;
+  font-size: 14px;
+}
+
+td button:after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  content: '\f2ed';
 }
