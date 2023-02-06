@@ -1,5 +1,6 @@
 /**
  * Get the values of a row
+ *
  * @param {Row} row
  */
 export function getRowValues(row: Row) {
@@ -8,6 +9,7 @@ export function getRowValues(row: Row) {
 
 /**
  * Get the index of an employee in the employee list
+ *
  * @param {Employee[]} employeeList
  * @param {string[]} rowValues
  */

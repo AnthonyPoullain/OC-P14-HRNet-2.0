@@ -1,5 +1,10 @@
 import { faker } from '@faker-js/faker';
 
+/**
+ * Generate random employee
+ *
+ * @returns {Employee} - employee
+ */
 export default function generateRandomEmployee() {
 	const MyDate = new Date();
 

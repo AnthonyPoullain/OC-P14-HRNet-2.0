@@ -19,8 +19,6 @@ function EmployeeList() {
 	const [currentRow, setCurrentRow] = useState(['']);
 	const [currentIndex, setCurrentIndex] = useState(0);
 
-	console.log('render');
-
 	/* Get employee list from global state */
 	const employees: Employee[] = useSelector(
 		(state: RootState) => state.employees
