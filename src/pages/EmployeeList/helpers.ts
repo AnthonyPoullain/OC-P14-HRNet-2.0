@@ -1,10 +1,13 @@
 /**
  * Get the values of a row
- * @param {Row} row
+ * @param e The event
  */
-export function getRowValues(row: Row) {
-	console.log(row);
-	return row.cells.map((cell: Cell) => cell.data);
+export function getRowValues(e: React.MouseEvent<HTMLButtonElement>) {
+	const rowValues = [
+		...(e.currentTarget.closest('tr') as HTMLTableRowElement).children,
+	].map((item) => (item as HTMLElement).innerText);
+	rowValues.pop();
+	return rowValues;
 }
 
 /**

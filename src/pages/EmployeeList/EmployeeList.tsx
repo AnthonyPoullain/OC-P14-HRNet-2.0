@@ -7,7 +7,7 @@ import Modal from '../../components/Modal/Modal';
 import Table from '../../components/Table/Table';
 import { RootState } from '../../store';
 import { clearRecords, deleteEmployeeByIndex } from '../../store/employeeSlice';
-import { getEmployeeIndex } from './helpers';
+import { getEmployeeIndex, getRowValues } from './helpers';
 
 function EmployeeList() {
 	const dispatch = useDispatch();
@@ -22,12 +22,8 @@ function EmployeeList() {
 	);
 
 	const handleDeleteEmployee = (e: React.MouseEvent<HTMLButtonElement>) => {
-		const rowValues = [
-			...(e.currentTarget.closest('tr') as HTMLTableRowElement).children,
-		].map((item) => (item as HTMLElement).innerText);
-		rowValues.pop();
-		currentRow.current = rowValues;
-		employeeIndex.current = getEmployeeIndex(employees, rowValues);
+		currentRow.current = getRowValues(e);
+		employeeIndex.current = getEmployeeIndex(employees, currentRow.current);
 		setDisplayDeleteModal(!displayDeleteModal);
 	};
 
@@ -71,7 +67,7 @@ function EmployeeList() {
 				variant="secondary"
 				onClick={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
 			>
-				<i className="fa-solid fa-trash-can" style={{ marginRight: '5px' }} />{' '}
+				<i className="fa-solid fa-trash-can" style={{ marginRight: '5px' }} />
 				Delete all records
 			</Button>
 
@@ -105,7 +101,8 @@ function EmployeeList() {
 						{
 							label: 'Delete',
 							variant: 'secondary',
-							onClick: () => dispatch(deleteEmployeeByIndex(employeeIndex)),
+							onClick: () =>
+								dispatch(deleteEmployeeByIndex(employeeIndex.current)),
 						},
 						{
 							label: 'Cancel',
