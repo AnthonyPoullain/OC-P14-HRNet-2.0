@@ -65,8 +65,8 @@ button:hover {
 label,
 legend {
   display: block;
-  margin-top: 1rem;
-  margin-bottom: 10px;
+  margin-top: 0.7rem;
+  margin-bottom: 7px;
   font-weight: bold;
   color: var(--grey-400);
 }
@@ -145,4 +145,8 @@ button[disabled] {
 .error,
 .error:focus {
   border: 1px solid var(--accent-color) !important;
+}
+
+button i {
+  margin-right: 10px;
 }

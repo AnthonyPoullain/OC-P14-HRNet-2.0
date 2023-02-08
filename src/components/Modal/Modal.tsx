@@ -11,17 +11,19 @@ interface ButtonProperties {
 
 interface ModalProperties {
 	title: string;
-	message: string;
-	buttons?: [ButtonProperties] | [ButtonProperties, ButtonProperties];
+	content: string;
+	buttons?: [] | [ButtonProperties] | [ButtonProperties, ButtonProperties];
+	closable?: boolean;
 	open: boolean;
 	onClose: () => void | void;
 }
 
 function Modal({
 	title,
-	message,
+	content,
 	buttons,
 	open = true,
+	closable,
 	onClose,
 }: ModalProperties) {
 	const defaultBtn: ButtonProperties = {
@@ -43,10 +45,19 @@ function Modal({
 	return open ? (
 		<>
 			<div className={styles['modal-bg']} />
-			{/* <div className={styles['close-btn']}>X</div> */}
 			<div className={styles.modal}>
+				{closable ? (
+					<button
+						data-testid="closeBtn"
+						type="button"
+						onClick={onClose}
+						className={styles['close-btn']}
+					>
+						<i className="fa-solid fa-circle-xmark" />
+					</button>
+				) : null}
 				<h2 className={styles.title}>{title}</h2>
-				<p className={styles.message}>{message}</p>
+				<p className={styles.content}>{content}</p>
 				<div className={styles.buttons}>
 					{buttons ? (
 						buttons.map((button) => (

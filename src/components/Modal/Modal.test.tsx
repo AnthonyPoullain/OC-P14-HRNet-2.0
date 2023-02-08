@@ -3,10 +3,10 @@ import userEvent from '@testing-library/user-event';
 import Modal from './Modal';
 
 describe('Modal component', () => {
-	describe('Content', () => {
+	describe('Text', () => {
 		beforeEach(() => {
 			// @ts-ignore
-			render(<Modal title="This is a title" message="This is a message" />);
+			render(<Modal title="This is a title" content="This is a message" />);
 		});
 
 		it('should render a title', async () => {
@@ -16,9 +16,9 @@ describe('Modal component', () => {
 		});
 
 		it('should render a message', async () => {
-			const message = screen.getByText(/This is a message/i);
-			expect(message).toBeInTheDocument();
-			expect(message.textContent).toBe('This is a message');
+			const content = screen.getByText(/This is a message/i);
+			expect(content).toBeInTheDocument();
+			expect(content.textContent).toBe('This is a message');
 		});
 	});
 
@@ -42,6 +42,15 @@ describe('Modal component', () => {
 				expect(button).toBeInTheDocument();
 				await userEvent.click(button);
 				expect(mockHandleClose).toHaveBeenCalled();
+			});
+		});
+
+		describe('When an emtpy array is passed as buttons prop', () => {
+			it('should render no buttons', async () => {
+				// @ts-ignore
+				render(<Modal buttons={[]} />);
+				const buttons = screen.queryAllByRole('button');
+				expect(buttons).toHaveLength(0);
 			});
 		});
 
@@ -88,7 +97,7 @@ describe('Modal component', () => {
 				expect(mockHandleClick).toHaveBeenCalled();
 			});
 
-			it('should still close modal after executing custom button onClick callback', async () => {
+			it('should close modal after executing custom button onClick callback', async () => {
 				const mockHandleClick = vi.fn();
 				const mockHandleClose = vi.fn();
 				const { getByRole } = render(
@@ -104,6 +113,23 @@ describe('Modal component', () => {
 				expect(button).toBeInTheDocument();
 				await userEvent.click(button);
 				expect(mockHandleClick).toHaveBeenCalled();
+				expect(mockHandleClose).toHaveBeenCalled();
+			});
+		});
+
+		describe('When prop "closable" is set to true', () => {
+			it('should render close button', () => {
+				// @ts-ignore
+				render(<Modal closable />);
+				const closeBtn = screen.getByTestId('closeBtn');
+				expect(closeBtn).toBeInTheDocument();
+			});
+			it('should close modal when close button is clicked', async () => {
+				const mockHandleClose = vi.fn();
+				// @ts-ignore
+				render(<Modal closable onClose={mockHandleClose} />);
+				const closeBtn = screen.getByTestId('closeBtn');
+				await userEvent.click(closeBtn);
 				expect(mockHandleClose).toHaveBeenCalled();
 			});
 		});

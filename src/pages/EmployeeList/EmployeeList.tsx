@@ -67,14 +67,14 @@ function EmployeeList() {
 				variant="secondary"
 				onClick={() => setDisplayDeleteAllModal(!displayDeleteAllModal)}
 			>
-				<i className="fa-solid fa-trash-can" style={{ marginRight: '5px' }} />
+				<i className="fa-solid fa-trash-can" />
 				Delete all records
 			</Button>
 
 			{createPortal(
 				<Modal
 					title="Delete all employees?"
-					message="This action cannot be undone."
+					content="This action cannot be undone."
 					open={displayDeleteAllModal}
 					onClose={() => setDisplayDeleteAllModal(false)}
 					buttons={[
@@ -94,7 +94,7 @@ function EmployeeList() {
 			{createPortal(
 				<Modal
 					title="Delete employee?"
-					message={`${currentRow.current[0]} ${currentRow.current[1]}`}
+					content={`${currentRow.current[0]} ${currentRow.current[1]}`}
 					open={displayDeleteModal}
 					onClose={() => setDisplayDeleteModal(false)}
 					buttons={[

@@ -68,7 +68,7 @@ function CreateEmployee() {
 			{createPortal(
 				<Modal
 					title="Confirmation"
-					message="User created successfully!"
+					content="User created successfully!"
 					open={displayDialog}
 					onClose={() => setDisplayDialog(!displayDialog)}
 				/>,
