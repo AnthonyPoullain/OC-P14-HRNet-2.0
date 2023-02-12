@@ -7,6 +7,7 @@ import Table from '../../components/Table/Table';
 import { RootState } from '../../store';
 import { clearRecords, deleteEmployeeByIndex } from '../../store/employeeSlice';
 import { getEmployeeIndex, getRowValues } from './helpers';
+import './EmployeeList.css';
 
 function EmployeeList() {
 	const dispatch = useDispatch();
@@ -75,24 +76,6 @@ function EmployeeList() {
 			</Button>
 
 			<Modal
-				title="Delete all employees?"
-				content="This action cannot be undone."
-				open={displayDeleteAllModal}
-				onClose={() => setDisplayDeleteAllModal(false)}
-				portalSelector="#portal"
-				buttons={[
-					{
-						label: 'Delete',
-						variant: 'secondary',
-						onClick: () => dispatch(clearRecords()),
-					},
-					{
-						label: 'Cancel',
-					},
-				]}
-			/>
-
-			<Modal
 				title="Delete employee?"
 				content={`${currentRow.current[0]} ${currentRow.current[1]}`}
 				open={displayDeleteModal}
@@ -104,6 +87,25 @@ function EmployeeList() {
 						variant: 'secondary',
 						onClick: () =>
 							dispatch(deleteEmployeeByIndex(employeeIndex.current)),
+					},
+					{
+						label: 'Cancel',
+					},
+				]}
+			/>
+
+			<Modal
+				title="Delete all employees?"
+				content="This action cannot be undone."
+				open={displayDeleteAllModal}
+				onClose={() => setDisplayDeleteAllModal(false)}
+				portalSelector="#portal"
+				buttons={[
+					{
+						label: 'Delete',
+						variant: 'secondary',
+						timer: 5,
+						onClick: () => dispatch(clearRecords()),
 					},
 					{
 						label: 'Cancel',

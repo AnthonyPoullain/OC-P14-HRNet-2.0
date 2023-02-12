@@ -1,14 +1,13 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import FocusTrap from 'focus-trap-react';
-import styles from './Modal.module.css';
+import './Modal.css';
 import ConditionalPortalWrapper from '../ConditionalPortalWrapper/ConditionalPortalWrapper';
 
 interface ButtonProperties {
 	label: string | ReactNode;
 	variant?: 'primary' | 'secondary';
 	onClick?: () => void;
-	disabled?: boolean;
-	fullWidth?: boolean;
+	timer?: number;
 }
 
 interface ModalProperties {
@@ -21,6 +20,35 @@ interface ModalProperties {
 	trapFocus?: boolean;
 	portalSelector?: string;
 	dimBackground?: boolean;
+}
+
+function ModalButton({ label, variant, onClick, timer }: ButtonProperties) {
+	const [count, setCount] = useState(timer);
+
+	useEffect(() => {
+		if (count) {
+			setInterval(() => {
+				setCount((prevCount) => prevCount && prevCount - 1);
+			}, 1000);
+		}
+	}, []);
+
+	return (
+		<button
+			key={crypto.randomUUID()}
+			type="button"
+			className={
+				variant === 'secondary'
+					? 'modal__btn modal__btn--secondary'
+					: 'modal__btn'
+			}
+			onClick={onClick}
+			disabled={!!count}
+		>
+			{label}
+			{count ? ` (${count})` : ''}
+		</button>
+	);
 }
 
 function Modal({
@@ -52,55 +80,49 @@ function Modal({
 		}
 	});
 
-	const hasAtLeastOneButton = !(buttons?.length === 0 && !closable);
-
 	return open ? (
 		<ConditionalPortalWrapper selector={portalSelector}>
 			<>
-				{dimBackground ? (
-					<div id="modal-bg" className={styles['modal-bg']} />
-				) : null}
-				<FocusTrap active={open && trapFocus && hasAtLeastOneButton}>
-					<div className={styles.modal} id="modal">
-						{closable ? (
-							<button
-								data-testid="closeBtn"
-								type="button"
-								onClick={onClose}
-								className={styles['close-btn']}
-							>
-								<i className="fa-solid fa-circle-xmark" />
-							</button>
-						) : null}
-						<h2 className={styles.title}>{title}</h2>
-						{typeof content === 'string' ? (
-							<p className={styles.content}>{content}</p>
-						) : (
-							content
-						)}
-						<div className={styles.buttons}>
-							{buttons ? (
-								buttons.map((button) => (
-									<button
-										key={crypto.randomUUID()}
-										type="button"
-										className={
-											button.variant === 'secondary'
-												? 'btn btn-secondary'
-												: 'btn'
-										}
-										onClick={
-											button.onClick ? () => onClickWrapper(button) : onClose
-										}
-									>
-										{button.label}
-									</button>
-								))
-							) : (
-								<button type="button" className="btn" onClick={onClose}>
-									Ok
+				{dimBackground ? <div id="modal-bg" className="modal__bg" /> : null}
+				<FocusTrap active={open && trapFocus}>
+					<div className="modal__container">
+						<div id="modal" className="modal">
+							{closable ? (
+								<button
+									data-testid="closeBtn"
+									type="button"
+									onClick={onClose}
+									className="modal__close-btn"
+								>
+									<i className="fa-solid fa-circle-xmark" />
 								</button>
-							)}
+							) : null}
+							<div className="modal__header">
+								<h2 className="modal__title">{title}</h2>
+							</div>
+							<div className="modal__body">
+								{typeof content === 'string' ? (
+									<p className="modal__content">{content}</p>
+								) : (
+									content
+								)}
+							</div>
+							<div className="modal__footer">
+								{buttons ? (
+									buttons.map((button) => (
+										<ModalButton
+											label={button.label}
+											variant={button.variant}
+											onClick={
+												button.onClick ? () => onClickWrapper(button) : onClose
+											}
+											timer={button.timer}
+										/>
+									))
+								) : (
+									<ModalButton label="Ok" onClick={onClose} />
+								)}
+							</div>
 						</div>
 					</div>
 				</FocusTrap>

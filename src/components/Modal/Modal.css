@@ -1,0 +1,150 @@
+:root {
+  --animation-duration: 200ms;
+  --primary-color: dodgerblue;
+  --accent-color: salmon;
+  --bg-color: #fff;
+  --grey-200: #d2d6dc;
+  --grey-400: #6b7280;
+  --grey-600: #373737;
+}
+
+.modal__bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.2);
+  animation: fade var(--animation-duration) ease-out forwards;
+}
+
+.modal h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.modal > * {
+  width: 100%;
+}
+
+.modal__container {
+  padding: 25px 45px;
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  border-radius: 5px;
+  top: 50%;
+  left: 50%;
+  animation: popup var(--animation-duration) ease-out forwards;
+  background: var(--bg-color);
+  box-shadow: 0px 0px 20px -10px #000;
+}
+
+.modal {
+  font-family: Roboto;
+  min-width: 300px;
+  min-height: 80px;
+  max-height: 65vh;
+  padding: 3px;
+  overflow: hidden;
+  text-align: center;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -25%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal__header {
+  margin-top: 5px;
+}
+
+.modal__body {
+  overflow: scroll;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: var(--grey-400);
+}
+
+.modal__footer {
+  display: flex;
+  gap: 10px;
+}
+
+.modal__btn {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--bg-color);
+  cursor: pointer;
+  width: 100%;
+  min-width: 140px;
+  max-width: 300px;
+  border-radius: 5px;
+  padding: 13px 33px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.modal__btn--secondary {
+  background-color: var(--accent-color);
+}
+
+.modal__btn:hover,
+.modal__footer:focus {
+  background-image: linear-gradient(rgb(255 255 255/20%) 0 0);
+  outline: default;
+}
+
+.modal__title {
+  font-size: 24px;
+  color: var(--grey-400);
+}
+
+.modal__close-btn .modal__close-btn:hover {
+  position: absolute;
+  border-radius: 100px;
+  font-size: 30px;
+  color: var(--grey-600);
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background-color: white;
+  padding: 0;
+  background-image: none;
+  display: flex;
+  align-items: center;
+}
+
+.modal__close-btn i {
+  margin: 0;
+}
