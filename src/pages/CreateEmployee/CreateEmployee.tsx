@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { createPortal } from 'react-dom';
 import { createEmployee } from '../../store/employeeSlice';
 import generateRandomEmployee from '../../mockData/generateRandomEmployee';
 import Field from '../../components/Field/Field';
@@ -17,7 +16,7 @@ const TEST_MODE = true;
 
 function CreateEmployee() {
 	const dispatch = useDispatch();
-	const [displayDialog, setDisplayDialog] = useState(false);
+	const [displayModal, setDisplayModal] = useState(false);
 
 	// Setup form
 	const formik = useFormik({
@@ -28,7 +27,7 @@ function CreateEmployee() {
 				state: getStateAbbreviation(values.state),
 			};
 			dispatch(createEmployee(updatedValues));
-			setDisplayDialog(true);
+			setDisplayModal(true);
 			resetForm();
 		},
 		validationSchema,
@@ -65,15 +64,14 @@ function CreateEmployee() {
 					</Button>
 				) : null}
 			</form>
-			{createPortal(
-				<Modal
-					title="Confirmation"
-					content="User created successfully!"
-					open={displayDialog}
-					onClose={() => setDisplayDialog(!displayDialog)}
-				/>,
-				document.getElementById('portal') as HTMLElement
-			)}
+
+			<Modal
+				title="Confirmation"
+				content="User created successfully!"
+				open={displayModal}
+				onClose={() => setDisplayModal(!displayModal)}
+				portalSelector="#portal"
+			/>
 		</div>
 	);
 }

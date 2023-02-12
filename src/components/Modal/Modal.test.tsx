@@ -5,8 +5,14 @@ import Modal from './Modal';
 describe('Modal component', () => {
 	describe('Text', () => {
 		beforeEach(() => {
-			// @ts-ignore
-			render(<Modal title="This is a title" content="This is a message" />);
+			render(
+				// @ts-ignore
+				<Modal
+					trapFocus={false}
+					title="This is a title"
+					content="This is a message"
+				/>
+			);
 		});
 
 		it('should render a title', async () => {
@@ -27,7 +33,7 @@ describe('Modal component', () => {
 			it('should render a default "Ok" button', () => {
 				const { getByRole } = render(
 					// @ts-ignore
-					<Modal />
+					<Modal trapFocus={false} />
 				);
 				const button = getByRole('button');
 				expect(button).toBeInTheDocument();
@@ -36,8 +42,10 @@ describe('Modal component', () => {
 
 			it('should close modal when default button is clicked', async () => {
 				const mockHandleClose = vi.fn();
-				// @ts-ignore
-				const { getByRole } = render(<Modal onClose={mockHandleClose} />);
+				const { getByRole } = render(
+					// @ts-ignore
+					<Modal trapFocus={false} onClose={mockHandleClose} />
+				);
 				const button = getByRole('button');
 				expect(button).toBeInTheDocument();
 				await userEvent.click(button);
@@ -48,7 +56,7 @@ describe('Modal component', () => {
 		describe('When an emtpy array is passed as buttons prop', () => {
 			it('should render no buttons', async () => {
 				// @ts-ignore
-				render(<Modal buttons={[]} />);
+				render(<Modal trapFocus={false} buttons={[]} closable={false} />);
 				const buttons = screen.queryAllByRole('button');
 				expect(buttons).toHaveLength(0);
 			});
@@ -58,7 +66,10 @@ describe('Modal component', () => {
 			it('should render custom button', async () => {
 				const { getByRole } = render(
 					// @ts-ignore
-					<Modal buttons={[{ label: 'This is a custom button' }]} />
+					<Modal
+						trapFocus={false}
+						buttons={[{ label: 'This is a custom button' }]}
+					/>
 				);
 				const button = getByRole('button');
 				expect(button).toBeInTheDocument();
@@ -69,6 +80,7 @@ describe('Modal component', () => {
 				const { getAllByRole } = render(
 					// @ts-ignore
 					<Modal
+						trapFocus={false}
 						buttons={[
 							{ label: 'This is a button' },
 							{ label: 'This is a second button' },
@@ -86,6 +98,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						trapFocus={false}
 						buttons={[
 							{ label: 'Execute mock callback', onClick: mockHandleClick },
 						]}
@@ -103,6 +116,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						trapFocus={false}
 						onClose={mockHandleClose}
 						buttons={[
 							{ label: 'Execute mock callback', onClick: mockHandleClick },
@@ -120,14 +134,14 @@ describe('Modal component', () => {
 		describe('When prop "closable" is set to true', () => {
 			it('should render close button', () => {
 				// @ts-ignore
-				render(<Modal closable />);
+				render(<Modal trapFocus={false} closable />);
 				const closeBtn = screen.getByTestId('closeBtn');
 				expect(closeBtn).toBeInTheDocument();
 			});
 			it('should close modal when close button is clicked', async () => {
 				const mockHandleClose = vi.fn();
 				// @ts-ignore
-				render(<Modal closable onClose={mockHandleClose} />);
+				render(<Modal trapFocus={false} closable onClose={mockHandleClose} />);
 				const closeBtn = screen.getByTestId('closeBtn');
 				await userEvent.click(closeBtn);
 				expect(mockHandleClose).toHaveBeenCalled();

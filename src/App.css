@@ -11,6 +11,10 @@
   position: relative;
 }
 
+button:focus {
+  outline: default;
+}
+
 #app {
   z-index: 1;
 }
@@ -112,7 +116,6 @@ form select:focus {
   width: 100%;
   min-width: 100px;
   font-weight: bold;
-  outline: none;
   border-radius: 5px;
   padding: 10px 13px;
   font-size: 14px;

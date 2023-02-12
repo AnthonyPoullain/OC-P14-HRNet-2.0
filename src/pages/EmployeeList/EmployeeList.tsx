@@ -1,6 +1,5 @@
 import { h } from 'gridjs';
 import { useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button/Button';
 import Modal from '../../components/Modal/Modal';
@@ -11,15 +10,19 @@ import { getEmployeeIndex, getRowValues } from './helpers';
 
 function EmployeeList() {
 	const dispatch = useDispatch();
-	const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
-	const [displayDeleteAllModal, setDisplayDeleteAllModal] = useState(false);
-	const currentRow = useRef(['']);
-	const employeeIndex = useRef(0);
 
-	/* Get employee list from global state */
+	// Get employee list from global state
 	const employees: Employee[] = useSelector(
 		(state: RootState) => state.employees
 	);
+
+	// Handle modal display
+	const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+	const [displayDeleteAllModal, setDisplayDeleteAllModal] = useState(false);
+
+	// Delete a specific employee
+	const currentRow = useRef(['']);
+	const employeeIndex = useRef(0);
 
 	const handleDeleteEmployee = (e: React.MouseEvent<HTMLButtonElement>) => {
 		currentRow.current = getRowValues(e);
@@ -71,46 +74,42 @@ function EmployeeList() {
 				Delete all records
 			</Button>
 
-			{createPortal(
-				<Modal
-					title="Delete all employees?"
-					content="This action cannot be undone."
-					open={displayDeleteAllModal}
-					onClose={() => setDisplayDeleteAllModal(false)}
-					buttons={[
-						{
-							label: 'Delete',
-							variant: 'secondary',
-							onClick: () => dispatch(clearRecords()),
-						},
-						{
-							label: 'Cancel',
-						},
-					]}
-				/>,
-				document.getElementById('portal') as HTMLElement
-			)}
+			<Modal
+				title="Delete all employees?"
+				content="This action cannot be undone."
+				open={displayDeleteAllModal}
+				onClose={() => setDisplayDeleteAllModal(false)}
+				portalSelector="#portal"
+				buttons={[
+					{
+						label: 'Delete',
+						variant: 'secondary',
+						onClick: () => dispatch(clearRecords()),
+					},
+					{
+						label: 'Cancel',
+					},
+				]}
+			/>
 
-			{createPortal(
-				<Modal
-					title="Delete employee?"
-					content={`${currentRow.current[0]} ${currentRow.current[1]}`}
-					open={displayDeleteModal}
-					onClose={() => setDisplayDeleteModal(false)}
-					buttons={[
-						{
-							label: 'Delete',
-							variant: 'secondary',
-							onClick: () =>
-								dispatch(deleteEmployeeByIndex(employeeIndex.current)),
-						},
-						{
-							label: 'Cancel',
-						},
-					]}
-				/>,
-				document.getElementById('portal') as HTMLElement
-			)}
+			<Modal
+				title="Delete employee?"
+				content={`${currentRow.current[0]} ${currentRow.current[1]}`}
+				open={displayDeleteModal}
+				onClose={() => setDisplayDeleteModal(false)}
+				portalSelector="#portal"
+				buttons={[
+					{
+						label: 'Delete',
+						variant: 'secondary',
+						onClick: () =>
+							dispatch(deleteEmployeeByIndex(employeeIndex.current)),
+					},
+					{
+						label: 'Cancel',
+					},
+				]}
+			/>
 		</div>
 	);
 }
