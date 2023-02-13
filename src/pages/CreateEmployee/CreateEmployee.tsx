@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { createEmployee } from '../../store/employeeSlice';
-import generateRandomEmployee from '../../mockData/generateRandomEmployee';
 import Field from '../../components/Field/Field';
 import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
@@ -12,7 +11,7 @@ import getStateAbbreviation from './helpers';
 
 /* If true, displays a 'Generate random data' button at the bototm of the page to quickly 
 fill in the input fields with formatted data. */
-const TEST_MODE = true;
+const DEV_MODE = process.env.NODE_ENV === 'development';
 
 function CreateEmployee() {
 	const dispatch = useDispatch();
@@ -33,9 +32,13 @@ function CreateEmployee() {
 		validationSchema,
 	});
 
-	const handleGenerateData = () => {
-		const mockData = generateRandomEmployee();
-		formik.setValues(mockData);
+	const handleGenerateData = async () => {
+		if (DEV_MODE) {
+			const module = await import('../../mockData/generateRandomEmployee');
+			const generateRandomEmployee = module.default;
+			const mockData = generateRandomEmployee();
+			formik.setValues(mockData);
+		}
 	};
 
 	return (
@@ -58,7 +61,7 @@ function CreateEmployee() {
 				<Button type="submit" fullWidth onClick={() => window.scrollTo(0, 0)}>
 					Save
 				</Button>
-				{TEST_MODE ? (
+				{DEV_MODE ? (
 					<Button fullWidth onClick={handleGenerateData} variant="secondary">
 						Generate random data
 					</Button>
