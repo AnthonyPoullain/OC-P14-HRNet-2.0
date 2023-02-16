@@ -3,28 +3,59 @@ import userEvent from '@testing-library/user-event';
 import Modal from './Modal';
 
 describe('Modal component', () => {
-	describe('Text', () => {
-		beforeEach(() => {
-			render(
-				// @ts-ignore
-				<Modal
-					trapFocus={false}
-					title="This is a title"
-					content="This is a message"
-				/>
-			);
+	describe('Title and content', () => {
+		describe('If strings are passed as props', () => {
+			beforeEach(() => {
+				render(
+					// @ts-ignore
+					<Modal
+						trapFocus={false}
+						title="This is a title"
+						content="This is a message"
+					/>
+				);
+			});
+
+			it('should render a <h2>title</h2>)', async () => {
+				const title = screen.getByText(/This is a title/i);
+				expect(title).toBeInTheDocument();
+				expect(title.textContent).toBe('This is a title');
+				expect(title.nodeName).toBe('H2');
+			});
+
+			it('should render a <p>content</p>', async () => {
+				const content = screen.getByText(/This is a message/i);
+				expect(content).toBeInTheDocument();
+				expect(content.textContent).toBe('This is a message');
+				expect(content.nodeName).toBe('P');
+			});
 		});
 
-		it('should render a title', async () => {
-			const title = screen.getByText(/This is a title/i);
-			expect(title).toBeInTheDocument();
-			expect(title.textContent).toBe('This is a title');
-		});
+		describe('If custom Elements/nodes are passed as props', () => {
+			beforeEach(() => {
+				render(
+					// @ts-ignore
+					<Modal
+						trapFocus={false}
+						title={<span>This is a title</span>}
+						content={<span>This is a message</span>}
+					/>
+				);
+			});
 
-		it('should render a message', async () => {
-			const content = screen.getByText(/This is a message/i);
-			expect(content).toBeInTheDocument();
-			expect(content.textContent).toBe('This is a message');
+			it('should render custom element/node title as prop)', async () => {
+				const title = screen.getByText(/This is a title/i);
+				expect(title).toBeInTheDocument();
+				expect(title.textContent).toBe('This is a title');
+				expect(title.nodeName).toBe('SPAN');
+			});
+
+			it('should render custom element/node content as prop)', async () => {
+				const content = screen.getByText(/This is a message/i);
+				expect(content).toBeInTheDocument();
+				expect(content.textContent).toBe('This is a message');
+				expect(content.nodeName).toBe('SPAN');
+			});
 		});
 	});
 
