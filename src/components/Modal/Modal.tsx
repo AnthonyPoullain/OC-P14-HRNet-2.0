@@ -4,8 +4,8 @@ import './Modal.css';
 import ConditionalPortalWrapper from '../ConditionalPortalWrapper/ConditionalPortalWrapper';
 
 interface ButtonProperties {
-	label: string | ReactNode;
-	variant?: 'primary' | 'secondary';
+	label: string | JSX.Element | ReactNode;
+	variant?: 'secondary';
 	onClick?: () => void;
 	timer?: number;
 }
@@ -76,6 +76,19 @@ function Modal({
 		if (button.onClick) button.onClick();
 		if (onClose) onClose();
 	}
+
+	useEffect(() => {
+		// Keyboard accessibility
+		const handleKeydown = (e: KeyboardEvent) => {
+			if (e.code === 'Escape') onClose();
+		};
+		if (open) {
+			document.addEventListener('keydown', handleKeydown);
+		}
+		return open
+			? () => document.removeEventListener('keydown', handleKeydown)
+			: () => null;
+	}, [open]);
 
 	return open ? (
 		<ConditionalPortalWrapper selector={portalSelector}>

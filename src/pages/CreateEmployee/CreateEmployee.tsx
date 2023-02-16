@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { createEmployee } from '../../store/employeeSlice';
@@ -32,6 +32,14 @@ function CreateEmployee() {
 		validationSchema,
 	});
 
+	useEffect(() => {
+		if (!formik.isValid) {
+			document.querySelector('.error')?.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	}, [formik.isSubmitting]);
+
 	const handleGenerateData = async () => {
 		if (DEV_MODE) {
 			const module = await import('../../mockData/generateRandomEmployee');
@@ -58,7 +66,7 @@ function CreateEmployee() {
 						errorMessage={formik.errors[input.id]}
 					/>
 				))}
-				<Button type="submit" fullWidth onClick={() => window.scrollTo(0, 0)}>
+				<Button type="submit" fullWidth>
 					Save
 				</Button>
 				{DEV_MODE ? (
@@ -72,7 +80,13 @@ function CreateEmployee() {
 				title="Confirmation"
 				content="User created successfully!"
 				open={displayModal}
-				onClose={() => setDisplayModal(!displayModal)}
+				onClose={() => {
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth',
+					});
+					setDisplayModal(!displayModal);
+				}}
 				portalSelector="#portal"
 			/>
 		</div>

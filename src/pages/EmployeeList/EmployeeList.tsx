@@ -5,8 +5,8 @@ import Button from '../../components/Button/Button';
 import Modal from '../../components/Modal/Modal';
 import Table from '../../components/Table/Table';
 import { RootState } from '../../store';
-import { clearRecords, deleteEmployeeByIndex } from '../../store/employeeSlice';
-import { getEmployeeIndex, getRowValues } from './helpers';
+import { clearRecords, deleteEmployee } from '../../store/employeeSlice';
+import getRowValues from './helpers';
 import './EmployeeList.css';
 
 function EmployeeList() {
@@ -23,11 +23,9 @@ function EmployeeList() {
 
 	// Delete a specific employee
 	const currentRow = useRef(['']);
-	const employeeIndex = useRef(0);
 
 	const handleDeleteEmployee = (e: React.MouseEvent<HTMLButtonElement>) => {
 		currentRow.current = getRowValues(e);
-		employeeIndex.current = getEmployeeIndex(employees, currentRow.current);
 		setDisplayDeleteModal(!displayDeleteModal);
 	};
 
@@ -85,8 +83,7 @@ function EmployeeList() {
 					{
 						label: 'Delete',
 						variant: 'secondary',
-						onClick: () =>
-							dispatch(deleteEmployeeByIndex(employeeIndex.current)),
+						onClick: () => dispatch(deleteEmployee(currentRow.current)),
 					},
 					{
 						label: 'Cancel',

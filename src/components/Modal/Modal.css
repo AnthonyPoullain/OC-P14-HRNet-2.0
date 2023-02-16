@@ -8,6 +8,17 @@
   --grey-600: #373737;
 }
 
+.modal h1,
+.modal h2,
+.modal h3,
+.modal h4,
+.modal h5,
+.modal h6,
+.modal p {
+  margin: 0;
+  padding: 0;
+}
+
 .modal__bg {
   position: fixed;
   top: 0;
@@ -16,17 +27,6 @@
   right: 0;
   background: rgba(0, 0, 0, 0.2);
   animation: fade var(--animation-duration) ease-out forwards;
-}
-
-.modal h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
-  padding: 0;
 }
 
 .modal > * {

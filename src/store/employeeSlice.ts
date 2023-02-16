@@ -12,8 +12,17 @@ export const employeeSlice = createSlice({
 		createEmployee: (state: Employee[], action) => {
 			state.push(action.payload);
 		},
-		deleteEmployeeByIndex: (state, action) => {
-			state.splice(action.payload, 1);
+		deleteEmployee: (state, action) => {
+			state.filter((employee, index, arr) => {
+				if (
+					JSON.stringify(Object.values(employee).sort()) ===
+					JSON.stringify(action.payload.sort())
+				) {
+					arr.splice(index, 1);
+					return true;
+				}
+				return false;
+			});
 		},
 		clearRecords: (state) => {
 			state.splice(0, state.length);
@@ -21,7 +30,7 @@ export const employeeSlice = createSlice({
 	},
 });
 
-export const { createEmployee, deleteEmployeeByIndex, clearRecords } =
+export const { createEmployee, deleteEmployee, clearRecords } =
 	employeeSlice.actions;
 
 export default employeeSlice.reducer;
