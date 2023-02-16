@@ -14,8 +14,13 @@ interface ModalProperties {
 	open: boolean;
 	onClose: () => void | void;
 	content: string | JSX.Element | ReactNode;
-	title?: string;
-	buttons?: [] | [ButtonProperties] | [ButtonProperties, ButtonProperties];
+	title?: string | JSX.Element | ReactNode;
+	buttons?:
+	| []
+	| [ButtonProperties]
+	| [ButtonProperties, ButtonProperties]
+	| JSX.Element
+	| ReactNode;
 	closable?: boolean;
 	trapFocus?: boolean;
 	portalSelector?: string;
@@ -35,7 +40,6 @@ function ModalButton({ label, variant, onClick, timer }: ButtonProperties) {
 
 	return (
 		<button
-			key={crypto.randomUUID()}
 			type="button"
 			className={
 				variant === 'secondary'
@@ -73,13 +77,6 @@ function Modal({
 		if (onClose) onClose();
 	}
 
-	// Keyboard accessibility
-	document.addEventListener('keydown', (event) => {
-		if (event.code === 'Escape') {
-			onClose();
-		}
-	});
-
 	return open ? (
 		<ConditionalPortalWrapper selector={portalSelector}>
 			<>
@@ -98,7 +95,11 @@ function Modal({
 								</button>
 							) : null}
 							<div className="modal__header">
-								<h2 className="modal__title">{title}</h2>
+								{typeof title === 'string' ? (
+									<h2 className="modal__title">{title}</h2>
+								) : (
+									title
+								)}
 							</div>
 							<div className="modal__body">
 								{typeof content === 'string' ? (
@@ -108,20 +109,22 @@ function Modal({
 								)}
 							</div>
 							<div className="modal__footer">
-								{buttons ? (
-									buttons.map((button) => (
+								{!buttons && <ModalButton label="Ok" onClick={onClose} />}
+								{buttons && Array.isArray(buttons)
+									? buttons.map((button: ButtonProperties) => (
 										<ModalButton
+											key={crypto.randomUUID()}
 											label={button.label}
 											variant={button.variant}
 											onClick={
-												button.onClick ? () => onClickWrapper(button) : onClose
+												button.onClick
+													? () => onClickWrapper(button)
+													: onClose
 											}
 											timer={button.timer}
 										/>
 									))
-								) : (
-									<ModalButton label="Ok" onClick={onClose} />
-								)}
+									: buttons}
 							</div>
 						</div>
 					</div>
