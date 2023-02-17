@@ -93,7 +93,9 @@ function Modal({
 	return open ? (
 		<ConditionalPortalWrapper selector={portalSelector}>
 			<>
-				{dimBackground ? <div id="modal-bg" className="modal__bg" /> : null}
+				{dimBackground ? (
+					<div id="modal-bg" className="modal__bg" data-testid="modal-bg" />
+				) : null}
 				<FocusTrap active={open && trapFocus}>
 					<div className="modal__container">
 						<div id="modal" className="modal">

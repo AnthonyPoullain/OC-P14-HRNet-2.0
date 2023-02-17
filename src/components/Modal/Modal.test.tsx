@@ -3,8 +3,30 @@ import userEvent from '@testing-library/user-event';
 import Modal from './Modal';
 
 describe('Modal component', () => {
+	describe('Background', () => {
+		describe('When no prop is passed', () => {
+			it('should dim background by default', async () => {
+				render(
+					// @ts-ignore
+					<Modal trapFocus={false} />
+				);
+				const bg = screen.getByTestId('modal-bg');
+				expect(bg).toBeInTheDocument();
+			});
+		});
+		describe('When dimBackground is set to false', () => {
+			it('should not dim background', async () => {
+				render(
+					// @ts-ignore
+					<Modal dimBackground={false} trapFocus={false} />
+				);
+				const bg = screen.queryByTestId('modal-bg');
+				expect(bg).not.toBeInTheDocument();
+			});
+		});
+	});
 	describe('Title and content', () => {
-		describe('If strings are passed as props', () => {
+		describe('When strings are passed as props', () => {
 			beforeEach(() => {
 				render(
 					// @ts-ignore
@@ -31,7 +53,7 @@ describe('Modal component', () => {
 			});
 		});
 
-		describe('If custom Elements/nodes are passed as props', () => {
+		describe('When custom HTML is passed as props', () => {
 			beforeEach(() => {
 				render(
 					// @ts-ignore
@@ -43,14 +65,14 @@ describe('Modal component', () => {
 				);
 			});
 
-			it('should render custom element/node title as prop)', async () => {
+			it('should render custom element/node title)', async () => {
 				const title = screen.getByText(/This is a title/i);
 				expect(title).toBeInTheDocument();
 				expect(title.textContent).toBe('This is a title');
 				expect(title.nodeName).toBe('SPAN');
 			});
 
-			it('should render custom element/node content as prop)', async () => {
+			it('should render custom element/node content)', async () => {
 				const content = screen.getByText(/This is a message/i);
 				expect(content).toBeInTheDocument();
 				expect(content.textContent).toBe('This is a message');
@@ -161,7 +183,23 @@ describe('Modal component', () => {
 				expect(mockHandleClose).toHaveBeenCalled();
 			});
 		});
-
+		describe('When custom HTML is passed as props', () => {
+			it('should render custom HTML button', async () => {
+				const { getByRole } = render(
+					// @ts-ignore
+					<Modal
+						trapFocus={false}
+						buttons={<button type="button">This is a button</button>}
+					/>
+				);
+				const button = getByRole('button');
+				expect(button).toBeInTheDocument();
+				expect(button.textContent).toBe('This is a button');
+				expect(button.nodeName).toBe('BUTTON');
+			});
+		});
+	});
+	describe('Close button', () => {
 		describe('When prop "closable" is set to true', () => {
 			it('should render close button', () => {
 				// @ts-ignore

@@ -83,6 +83,7 @@
 
 .modal__header {
   margin-top: 5px;
+  text-align: center;
 }
 
 .modal__body {
@@ -90,10 +91,13 @@
   font-size: 16px;
   margin-bottom: 10px;
   color: var(--grey-400);
+  text-align: center;
 }
 
 .modal__footer {
   display: flex;
+  justify-content: center;
+  text-align: center;
   gap: 10px;
 }
 
