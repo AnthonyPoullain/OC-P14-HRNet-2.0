@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from './Nav/Nav';
 
@@ -9,7 +10,9 @@ function Layout() {
 		<div id="app">
 			<Nav />
 			<main>
-				<Outlet />
+				<Suspense>
+					<Outlet />
+				</Suspense>
 			</main>
 		</div>
 	);
