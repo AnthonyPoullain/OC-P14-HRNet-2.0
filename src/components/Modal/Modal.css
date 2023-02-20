@@ -135,21 +135,16 @@
 .modal__close-btn:hover {
   position: absolute;
   border-radius: 100px;
-  font-size: 30px;
-  color: var(--grey-600);
+  fill: var(--grey-600);
   top: -10px;
   right: -10px;
   cursor: pointer;
   width: 28px;
   height: 28px;
   border: none;
-  background-color: white;
   padding: 0;
-  background-image: none;
-  display: flex;
-  align-items: center;
 }
 
-.modal__close-btn i {
+.modal__close-btn img {
   margin: 0;
 }
