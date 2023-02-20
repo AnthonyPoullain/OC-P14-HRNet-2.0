@@ -21,6 +21,8 @@ interface ModalProperties {
 	| [ButtonProperties, ButtonProperties]
 	| JSX.Element
 	| ReactNode;
+	height?: string;
+	width?: string;
 	closable?: boolean;
 	trapFocus?: boolean;
 	portalSelector?: string;
@@ -60,6 +62,8 @@ function Modal({
 	content,
 	buttons,
 	open = true,
+	height,
+	width,
 	closable,
 	onClose,
 	trapFocus = true,
@@ -98,7 +102,12 @@ function Modal({
 				) : null}
 				<FocusTrap active={open && trapFocus}>
 					<div className="modal__container">
-						<div id="modal" className="modal">
+						<div
+							id="modal"
+							data-testid="modal"
+							className="modal"
+							style={{ width, height }}
+						>
 							{closable ? (
 								<button
 									data-testid="closeBtn"

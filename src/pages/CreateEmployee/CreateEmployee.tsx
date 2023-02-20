@@ -11,7 +11,7 @@ import getStateAbbreviation from './helpers';
 
 /* If true, displays a 'Generate random data' button at the bototm of the page to quickly 
 fill in the input fields with formatted data. */
-const DEV_MODE = process.env.NODE_ENV === 'development';
+const DEV_MODE = !(process.env.NODE_ENV === 'production');
 
 function CreateEmployee() {
 	const dispatch = useDispatch();

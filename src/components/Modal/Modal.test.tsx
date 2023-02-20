@@ -25,6 +25,19 @@ describe('Modal component', () => {
 			});
 		});
 	});
+	describe('Modal', () => {
+		describe('When custom height and width are passed', () => {
+			it('should have custom height & width attributes', async () => {
+				render(
+					// @ts-ignore
+					<Modal trapFocus={false} height="200px" width="400px" />
+				);
+				const modal = screen.getByTestId('modal');
+				expect(modal).toHaveStyle('height: 200px');
+				expect(modal).toHaveStyle('width: 400px');
+			});
+		});
+	});
 	describe('Title and content', () => {
 		describe('When strings are passed as props', () => {
 			beforeEach(() => {
