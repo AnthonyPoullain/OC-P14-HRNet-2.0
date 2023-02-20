@@ -6,6 +6,7 @@ import ConditionalPortalWrapper from '../ConditionalPortalWrapper/ConditionalPor
 interface ButtonProperties {
 	label: string | JSX.Element | ReactNode;
 	variant?: 'secondary';
+	color?: string;
 	onClick?: () => void;
 	timer?: number;
 }
@@ -29,7 +30,13 @@ interface ModalProperties {
 	dimBackground?: boolean;
 }
 
-function ModalButton({ label, variant, onClick, timer }: ButtonProperties) {
+function ModalButton({
+	label,
+	variant,
+	onClick,
+	color,
+	timer,
+}: ButtonProperties) {
 	const [count, setCount] = useState(timer);
 
 	useEffect(() => {
@@ -43,6 +50,7 @@ function ModalButton({ label, variant, onClick, timer }: ButtonProperties) {
 	return (
 		<button
 			type="button"
+			style={color ? { backgroundColor: color } : {}}
 			className={
 				variant === 'secondary'
 					? 'modal__btn modal__btn--secondary'
@@ -148,6 +156,7 @@ function Modal({
 													: onClose
 											}
 											timer={button.timer}
+											color={button.color}
 										/>
 									))
 									: buttons}
