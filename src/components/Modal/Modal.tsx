@@ -69,7 +69,7 @@ function Modal({
 	title,
 	content,
 	buttons,
-	open,
+	open = true,
 	height,
 	width,
 	closable,

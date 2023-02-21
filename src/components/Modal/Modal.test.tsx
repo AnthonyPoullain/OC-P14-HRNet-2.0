@@ -20,6 +20,8 @@ describe('Modal component', () => {
 					// @ts-ignore
 					<Modal dimBackground={false} trapFocus={false} />
 				);
+				const modal = screen.getByTestId('modal');
+				expect(modal).toBeInTheDocument();
 				const bg = screen.queryByTestId('modal-bg');
 				expect(bg).not.toBeInTheDocument();
 			});
@@ -44,6 +46,7 @@ describe('Modal component', () => {
 				render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						title="This is a title"
 						content="This is a message"
@@ -71,6 +74,7 @@ describe('Modal component', () => {
 				render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						title={<span>This is a title</span>}
 						content={<span>This is a message</span>}
@@ -123,6 +127,8 @@ describe('Modal component', () => {
 			it('should render no buttons', async () => {
 				// @ts-ignore
 				render(<Modal trapFocus={false} buttons={[]} closable={false} />);
+				const modal = screen.getByTestId('modal');
+				expect(modal).toBeInTheDocument();
 				const buttons = screen.queryAllByRole('button');
 				expect(buttons).toHaveLength(0);
 			});
@@ -133,6 +139,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						buttons={[{ label: 'This is a custom button' }]}
 					/>
@@ -146,6 +153,7 @@ describe('Modal component', () => {
 				const { getAllByRole } = render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						buttons={[
 							{ label: 'This is a button' },
@@ -164,6 +172,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						buttons={[
 							{ label: 'Execute mock callback', onClick: mockHandleClick },
@@ -182,6 +191,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						onClose={mockHandleClose}
 						buttons={[
@@ -201,6 +211,7 @@ describe('Modal component', () => {
 				const { getByRole } = render(
 					// @ts-ignore
 					<Modal
+						open
 						trapFocus={false}
 						buttons={<button type="button">This is a button</button>}
 					/>
@@ -222,8 +233,10 @@ describe('Modal component', () => {
 			});
 			it('should close modal when close button is clicked', async () => {
 				const mockHandleClose = vi.fn();
-				// @ts-ignore
-				render(<Modal trapFocus={false} closable onClose={mockHandleClose} />);
+				render(
+					// @ts-ignore
+					<Modal trapFocus={false} closable onClose={mockHandleClose} />
+				);
 				const closeBtn = screen.getByTestId('closeBtn');
 				await userEvent.click(closeBtn);
 				expect(mockHandleClose).toHaveBeenCalled();
