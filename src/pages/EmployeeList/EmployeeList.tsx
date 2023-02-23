@@ -1,8 +1,8 @@
 import { h } from 'gridjs';
 import { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-quick-modal';
 import Button from '../../components/Button/Button';
-import Modal from '../../components/Modal/Modal';
 import Table from '../../components/Table/Table';
 import { RootState } from '../../store';
 import { clearRecords, deleteEmployee } from '../../store/employeeSlice';

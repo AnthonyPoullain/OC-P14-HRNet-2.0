@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import Modal from 'react-quick-modal';
 import { createEmployee } from '../../store/employeeSlice';
 import Field from '../../components/Field/Field';
-import Modal from '../../components/Modal/Modal';
 import Button from '../../components/Button/Button';
 import { INITIAL_VALUES, INPUTS } from './values';
 import validationSchema from './validationSchema';
