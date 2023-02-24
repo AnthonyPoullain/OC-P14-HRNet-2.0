@@ -12,4 +12,8 @@ export default defineConfig({
 		reporters: 'verbose',
 		setupFiles: './setupTests.ts',
 	},
+	base: '/OC-P14-HRNet-2.0/',
+	build: {
+		outDir: 'dist/OC-P14-HRNet-2.0/',
+	},
 });

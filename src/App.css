@@ -142,6 +142,10 @@ form select:focus {
   margin-top: 3px;
 }
 
+table.gridjs-table {
+  width: 100%;
+}
+
 .error-message {
   font-size: 11px;
   color: var(--accent-color);
