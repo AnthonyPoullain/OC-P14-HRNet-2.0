@@ -245,54 +245,60 @@ export const STATES = [
 	},
 ];
 
-export const INPUTS: InputField[] = [
-	{
-		label: 'First Name',
-		id: 'firstName',
-		type: 'text',
-	},
-	{
-		label: 'Last Name',
-		id: 'lastName',
-		type: 'text',
-	},
-	{
-		label: 'Date of Birth',
-		id: 'dateOfBirth',
-		type: 'date',
-	},
-	{
-		label: 'Start Date',
-		id: 'startDate',
-		type: 'date',
-	},
-	{
-		label: 'Street',
-		id: 'street',
-		type: 'text',
-	},
-	{
-		label: 'City',
-		id: 'city',
-		type: 'text',
-	},
-	{
-		label: 'State',
-		id: 'state',
-		type: 'select',
-		options: STATES.map((state) => state.name),
-	},
-	{
-		label: 'Zip Code',
-		id: 'zipCode',
-		type: 'text',
-	},
-	{
-		label: 'Department',
-		id: 'department',
-		type: 'select',
-		options: DEPARTMENTS,
-	},
+export const INPUTS: InputField[][] = [
+	[
+		{
+			label: 'First Name',
+			id: 'firstName',
+			type: 'text',
+		},
+		{
+			label: 'Last Name',
+			id: 'lastName',
+			type: 'text',
+		},
+		{
+			label: 'Date of Birth',
+			id: 'dateOfBirth',
+			type: 'date',
+		},
+		{
+			label: 'Start Date',
+			id: 'startDate',
+			type: 'date',
+		},
+	],
+	[
+		{
+			label: 'Street',
+			id: 'street',
+			type: 'text',
+		},
+		{
+			label: 'City',
+			id: 'city',
+			type: 'text',
+		},
+		{
+			label: 'State',
+			id: 'state',
+			type: 'select',
+			options: STATES.map((state) => state.name),
+		},
+		{
+			label: 'Zip Code',
+			id: 'zipCode',
+			type: 'text',
+		},
+	],
+	[
+		{
+			label: 'Department',
+			id: 'department',
+			type: 'select',
+			options: DEPARTMENTS,
+		},
+	],
 ];
 
 export const INITIAL_VALUES: Employee = {

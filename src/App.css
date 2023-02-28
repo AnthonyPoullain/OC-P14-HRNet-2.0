@@ -33,7 +33,7 @@ button:focus {
 
 body {
   margin: 0;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   color: var(--grey-400);
   font-size: 14px;
   min-height: 100vh;
@@ -78,14 +78,22 @@ label,
 legend {
   display: block;
   margin-top: 0.7rem;
-  margin-bottom: 7px;
   font-weight: bold;
   color: var(--grey-400);
+}
+
+label {
+  margin-bottom: 7px;
 }
 
 fieldset {
   border: 1px solid var(--grey-200);
   border-radius: 5px;
+  margin: 20px 0;
+}
+
+fieldset div:last-child {
+  margin-bottom: 10px;
 }
 
 form {
@@ -162,6 +170,8 @@ button[disabled] {
   border: 1px solid var(--accent-color) !important;
 }
 
-button i {
+button svg {
+  fill: white;
+  width: 14px;
   margin-right: 10px;
 }

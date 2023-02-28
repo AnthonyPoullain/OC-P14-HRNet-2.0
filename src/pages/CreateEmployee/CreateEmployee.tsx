@@ -53,7 +53,7 @@ function CreateEmployee() {
 		<div className="container">
 			<h1>Create Employee</h1>
 			<form id="create-employee" onSubmit={formik.handleSubmit}>
-				{INPUTS.map((input) => (
+				{INPUTS[0].map((input) => (
 					<Field
 						key={input.id}
 						label={input.label}
@@ -66,6 +66,37 @@ function CreateEmployee() {
 						errorMessage={formik.errors[input.id]}
 					/>
 				))}
+
+				<fieldset>
+					<legend>Address</legend>
+					{INPUTS[1].map((input) => (
+						<Field
+							key={input.id}
+							label={input.label}
+							value={formik.values[input.id]}
+							id={input.id}
+							type={input.type}
+							onChange={formik.handleChange}
+							options={input.options}
+							error={!!formik.touched[input.id] && !!formik.errors[input.id]}
+							errorMessage={formik.errors[input.id]}
+						/>
+					))}
+				</fieldset>
+				{INPUTS[2].map((input) => (
+					<Field
+						key={input.id}
+						label={input.label}
+						value={formik.values[input.id]}
+						id={input.id}
+						type={input.type}
+						onChange={formik.handleChange}
+						options={input.options}
+						error={!!formik.touched[input.id] && !!formik.errors[input.id]}
+						errorMessage={formik.errors[input.id]}
+					/>
+				))}
+
 				<Button type="submit" fullWidth>
 					Save
 				</Button>
