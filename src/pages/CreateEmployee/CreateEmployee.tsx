@@ -64,6 +64,7 @@ function CreateEmployee() {
 						options={input.options}
 						error={!!formik.touched[input.id] && !!formik.errors[input.id]}
 						errorMessage={formik.errors[input.id]}
+						aria-label={input.label}
 					/>
 				))}
 
@@ -80,6 +81,7 @@ function CreateEmployee() {
 							options={input.options}
 							error={!!formik.touched[input.id] && !!formik.errors[input.id]}
 							errorMessage={formik.errors[input.id]}
+							aria-label={input.label}
 						/>
 					))}
 				</fieldset>
@@ -94,6 +96,7 @@ function CreateEmployee() {
 						options={input.options}
 						error={!!formik.touched[input.id] && !!formik.errors[input.id]}
 						errorMessage={formik.errors[input.id]}
+						aria-label={input.label}
 					/>
 				))}
 

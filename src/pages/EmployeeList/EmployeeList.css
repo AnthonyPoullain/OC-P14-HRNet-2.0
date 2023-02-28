@@ -1,15 +1,11 @@
+td button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* td button:after { */
 /*   font-family: 'Font Awesome 6 Free'; */
 /*   font-weight: 900; */
 /*   content: '\f2ed'; */
 /* } */
-
-td button:after {
-  content: '⊝';
-  font-size: 24px;
-  line-height: 1;
-  margin-top: -2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

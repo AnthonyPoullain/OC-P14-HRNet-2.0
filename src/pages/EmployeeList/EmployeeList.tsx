@@ -52,7 +52,7 @@ function EmployeeList() {
 							onClick: handleDeleteEmployee,
 							style: { margin: '0', minWidth: '0' },
 						},
-						''
+						'Delete'
 					),
 			},
 		],
