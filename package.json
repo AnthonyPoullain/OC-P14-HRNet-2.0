@@ -20,7 +20,7 @@
 		"gridjs-react": "^5.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-quick-modal": "^1.0.1",
+		"react-quick-modal": "^1.0.2",
 		"react-redux": "^8.0.5",
 		"react-router-dom": "^6.6.1",
 		"yup": "^0.32.11"
